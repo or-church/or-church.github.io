@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<link href="images/favicon/favicon.png" rel="icon" type="image/png"/>
+<link href="images/favicon/favicon.png" rel="shortcut icon" type="image/png"/>
+<meta charset="utf-8"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OR (オル) Church and Coffee | 教会とコーヒー豆焙煎のお店</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&amp;family=Noto+Serif+JP:wght@300;400&amp;family=Noto+Sans+JP:wght@300;400;500;700&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<style>
+@font-face {
+  font-family: 'Roxborough CF';
+  src: url('fonts/RoxboroughCF-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background-color:#faf6f0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font-weight:400;font-size:16px;line-height:2;overflow-x:hidden;width:100%;max-width:100%}
+.event-img-grid{max-width:1000px;margin:0 auto 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+@media(max-width:600px){.event-img-grid{grid-template-columns:1fr}}
+.event-flex-grid{max-width:1000px;margin:0 auto 2rem;display:flex;gap:1.4rem;align-items:flex-start}
+.event-flex-item{flex:1}
+@media(max-width:600px){
+  .event-flex-grid{flex-direction:column;gap:1.2rem}
+  .event-flex-item{width:100%}
+}
+/* ナビ：left/right固定でwidth指定しない */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(0.6rem,2vw,2rem);height:56px;display:flex;align-items:center;justify-content:space-between;background-color:rgba(250,246,240,0.97);border-bottom:1px solid rgba(158,64,40,0.15);box-shadow:0 2px 20px rgba(44,26,14,0.07)}
+.nav-logo{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(0.72rem,2.2vw,1.15rem);color:#9e4028;background:none;border:none;cursor:pointer;white-space:nowrap;padding:0;flex-shrink:0}
+.nav-links{display:flex;gap:clamp(0.3rem,1vw,1.5rem);list-style:none;align-items:center;flex-shrink:1}
+.nav-btn{font-family:'Noto Sans JP',sans-serif;font-size:clamp(0.44rem,1.2vw,0.82rem);letter-spacing:0.01em;color:#5c3520;opacity:0.85;font-weight:500;padding:0 0 2px 0;border:none;border-bottom:1.5px solid transparent;background:none;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.nav-btn:hover,.nav-btn.active{opacity:1;color:#9e4028;border-bottom-color:#9e4028}
+/* ページ切り替え */
+.page{display:none}
+#page-home{display:block}
+/* ページヘッダー */
+.page-header{padding:clamp(4rem,8vw,8rem) clamp(1rem,3vw,2rem) clamp(2.5rem,4vw,5rem);text-align:center;background:linear-gradient(170deg,#faf6f0 0%,#ede0d0 100%);border-bottom:1px solid rgba(212,184,154,0.6)}
+.page-header h1{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,5vw,3.5rem);font-weight:400;color:#5c3520;line-height:1.2}
+.page-header .sub{margin-top:0.7rem;font-size:clamp(0.82rem,1.8vw,1rem);color:#5c3520;max-width:540px;margin-left:auto;margin-right:auto;line-height:1.9}
+.page-rule{width:40px;height:2px;background-color:#9e4028;margin:1.2rem auto 0;border-radius:1px}
+/* セクション */
+.sec{padding:clamp(2.5rem,5vw,5.5rem) clamp(1rem,3vw,2rem)}
+.inner{max-width:860px;margin:0 auto}
+.thin-rule{width:100%;height:1px;margin:0 0 2.5rem;background:linear-gradient(to right,transparent,#d4b89a 20%,#d4b89a 80%,transparent)}
+.sec-label{display:flex;align-items:center;gap:1rem;margin-bottom:2rem}
+.badge{width:50px;height:50px;border-radius:50%;background-color:#9e4028;color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:500;flex-shrink:0}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.9rem);font-weight:600;color:#5c3520}
+.verse-block{padding:1.2rem 1.6rem;border-left:4px solid #9e4028;background-color:rgba(158,64,40,0.05);border-radius:0 6px 6px 0;font-style:italic;font-size:clamp(0.85rem,1.8vw,1rem);color:#5c3520;line-height:2}
+.card{background-color:#faf6f0;padding:1.6rem 1.8rem;border-radius:6px;border-top:3px solid #9e4028;box-shadow:0 4px 20px rgba(44,26,14,0.08)}
+.card h3{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.3rem);font-weight:600;color:#5c3520;margin-bottom:0.7rem}
+.card p{font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2;color:#2c1a0e;font-weight:400}
+.card .italic-note{font-style:italic;color:#9e4028;font-size:0.88rem;margin-top:0.7rem;display:block}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal.visible{opacity:1;transform:none}
+/* フッター */
+footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
+.footer-top{padding:2.5rem clamp(1rem,3vw,2rem) 2rem;border-bottom:1px solid rgba(245,237,227,0.08);display:grid;grid-template-columns:1fr 1fr 1fr;gap:clamp(1rem,3vw,2.5rem);max-width:900px;margin:0 auto}
+.footer-logo-btn{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(1rem,2vw,1.5rem);color:#d4b89a;background:none;border:none;cursor:pointer;padding:0;display:block;margin-bottom:0.4rem;text-align:left}
+.footer-brand p{font-size:clamp(0.72rem,1.3vw,0.85rem);opacity:0.55;line-height:1.9}
+.footer-col h4{font-size:clamp(0.6rem,0.9vw,0.72rem);letter-spacing:0.2em;color:#c49a5a;text-transform:uppercase;margin-bottom:0.7rem;font-weight:400}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:0.3rem}
+.footer-nav-btn{font-family:'Noto Sans JP',sans-serif;color:rgba(245,237,227,0.6);font-size:clamp(0.72rem,1.3vw,0.88rem);background:none;border:none;cursor:pointer;padding:0;line-height:1.9;transition:color 0.2s;text-align:left}
+.footer-nav-btn:hover{color:#d4b89a}
+.footer-col p{font-size:clamp(0.72rem,1.3vw,0.88rem);line-height:2;color:rgba(245,237,227,0.75)}
+.contact-btn{background:none;border:none;cursor:pointer;padding:0;display:block;margin-bottom:0.2rem;text-align:left}
+.footer-bottom{padding:1rem clamp(1rem,3vw,2rem);text-align:center;font-size:clamp(0.58rem,0.9vw,0.7rem);color:rgba(245,237,227,0.3)}
+/* ヒーロー：left/right/top/bottom固定 */
+.hero{position:relative;height:100svh;min-height:480px;overflow:hidden;display:flex;align-items:center;justify-content:center;background-color:#2c1a0e}
+.hero-photo{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.42}
+.hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(3rem,6vw,5rem) clamp(1rem,3vw,2rem);color:#f5ede3;width:100%}
+.hero-eyebrow{font-size:clamp(0.78rem,1.8vw,1.05rem);letter-spacing:0.12em;color:#d4b89a;margin-bottom:1.2rem}
+.hero-title{
+  font-family:'Roxborough CF','Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,8vw,6rem);
+  font-weight:300;
+  font-style:normal;
+  line-height:1.12;
+  color:#f5ede3;
+  letter-spacing:0.01em;
+}
+.hero-title .line1{
+  display:block;
+  font-family:'Roxborough CF','Cormorant Garamond',serif;
+  font-style:normal;
+  font-weight:300;
+  color:#f5ede3;
+}
+.hero-title .line1 .paren{
+  font-family:'Roxborough CF','Cormorant Garamond',serif;
+  font-style:normal;
+  font-weight:400;
+  font-size:0.62em;
+  vertical-align:0.12em;
+  letter-spacing:0.01em;
+}
+.hero-title .line2{
+  display:block;
+  font-family:'Roxborough CF','Cormorant Garamond',serif;
+  font-style:normal;
+  font-weight:300;
+  color:#d4b89a;
+  letter-spacing:0.03em;
+  margin-bottom:0.2rem;
+}
+.hero-divider{width:40px;height:1px;background-color:#c49a5a;margin:0.8rem auto}
+.hero-sub{font-size:clamp(0.85rem,1.8vw,1.05rem);color:rgba(245,237,227,0.78);line-height:2}
+.hero-verse{margin-top:0.7rem;font-style:normal;font-size:clamp(0.78rem,1.8vw,1.05rem);color:rgba(245,237,227,0.72)}
+/* ウェルカム */
+.welcome-sec{background:linear-gradient(170deg,#faf6f0 0%,#ede0d0 100%);padding:clamp(3rem,5vw,6.5rem) clamp(1rem,3vw,2rem)}
+.welcome-inner{max-width:660px;margin:0 auto;text-align:center}
+.welcome-inner h2{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,4vw,3rem);color:#5c3520;margin-bottom:0.4rem}
+.welcome-sub{font-size:clamp(0.62rem,1.1vw,0.78rem);letter-spacing:0.22em;color:#9e4028;margin-bottom:1.5rem;display:block}
+.welcome-inner p{font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:#2c1a0e;margin-bottom:0.9rem;font-weight:400}
+.welcome-verse{margin-top:1.5rem;padding:1.3rem 1.8rem;border-top:1px solid rgba(212,184,154,0.8);border-bottom:1px solid rgba(212,184,154,0.8);font-style:italic;font-size:clamp(0.82rem,1.8vw,0.97rem);color:#5c3520;line-height:2}
+/* イントロカード */
+.intro-sec{background-color:#faf6f0;padding:clamp(3rem,5vw,6.5rem) clamp(1rem,3vw,2rem)}
+.intro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.8rem,1.5vw,1.5rem);max-width:900px;margin:0 auto}
+.intro-card{padding:clamp(1.5rem,2.5vw,2.5rem) clamp(1rem,2vw,1.8rem);text-align:center;background-color:#faf6f0;border-radius:6px;border-top:3px solid #9e4028;box-shadow:0 4px 20px rgba(44,26,14,0.07);transition:transform 0.28s;display:flex;flex-direction:column;align-items:center;cursor:pointer;border-left:none;border-right:none;border-bottom:none;width:100%;font-family:'Noto Sans JP',sans-serif}
+.intro-card:hover{transform:translateY(-4px)}
+.intro-icon{width:clamp(36px,5vw,50px);height:clamp(36px,5vw,50px);border-radius:50%;background-color:#9e4028;color:#fff;display:flex;align-items:center;justify-content:center;font-size:clamp(0.9rem,1.6vw,1.2rem);margin-bottom:clamp(0.7rem,1.2vw,1rem)}
+.intro-card h3{font-family:'Cormorant Garamond',serif;font-size:clamp(0.9rem,1.8vw,1.35rem);font-weight:600;color:#5c3520;margin-bottom:0.5rem}
+.intro-card p{font-size:clamp(0.68rem,1.2vw,0.88rem);color:#8b5a3a;line-height:1.85;flex:1}
+.intro-card-link{display:inline-block;margin-top:0.8rem;font-size:clamp(0.6rem,1vw,0.78rem);color:#9e4028;border-bottom:1px solid rgba(158,64,40,0.4);padding-bottom:1px}
+/* about */
+.about-cols{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.about-cols p{font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;margin-bottom:0.9rem;font-weight:400}
+.church-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.church-note{margin-top:1.5rem;padding:1.1rem 1.5rem;background-color:rgba(196,154,90,0.12);border-radius:6px;border-left:4px solid #c49a5a;font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2;color:#5c3520}
+.disclaimer{margin-top:1.5rem;font-size:clamp(0.72rem,1.3vw,0.82rem);color:#8b5a3a;opacity:0.65;line-height:2;border-top:1px solid #ede0d0;padding-top:1.2rem}
+/* roasting */
+.roasting-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.roasting-grid p{font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:rgba(245,237,227,0.85);margin-bottom:0.8rem}
+.roasting-verse{font-style:italic;font-size:clamp(0.82rem,1.8vw,0.97rem);color:#c49a5a;margin-bottom:1.2rem;display:block}
+.chill-box{background-color:rgba(255,255,255,0.07);padding:1.8rem;border-radius:6px;border:1px solid rgba(196,154,90,0.25)}
+.chill-box h3{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2.2vw,1.5rem);color:#c49a5a;margin-bottom:0.8rem}
+.chill-box p{font-size:clamp(0.82rem,1.8vw,0.97rem);color:rgba(245,237,227,0.82);line-height:2}
+.food-note{font-size:0.75rem;color:rgba(196,154,90,0.45);margin-top:0.8rem}
+/* lineup */
+.lineup-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:6px;overflow:hidden;border:1px solid #ede0d0}
+.coffee-item{padding:1.3rem 1.1rem 1.3rem 2rem;border-right:1px solid #ede0d0;border-bottom:1px solid #ede0d0;position:relative;background-color:#faf6f0}
+.coffee-item:nth-child(even){background-color:#faf6f0}
+.coffee-item::before{content:"\2726";position:absolute;left:0.7rem;top:1.5rem;color:#9e4028;font-size:0.55rem}
+.c-origin{font-size:clamp(0.58rem,1vw,0.7rem);letter-spacing:0.13em;color:#9e4028;text-transform:uppercase;margin-bottom:0.2rem}
+.c-name{font-family:'Cormorant Garamond',serif;font-size:clamp(0.9rem,1.8vw,1.15rem);font-weight:600;color:#5c3520;margin-bottom:0.3rem}
+.c-desc{font-size:clamp(0.72rem,1.3vw,0.88rem);color:#6b3f20;line-height:1.8;font-weight:400}
+.c-tag{display:inline-block;margin-top:0.35rem;font-size:clamp(0.55rem,0.9vw,0.65rem);border:1px solid rgba(158,64,40,0.4);color:#9e4028;padding:0.08rem 0.4rem;border-radius:20px}
+.lineup-etc{grid-column:1/-1;text-align:right;padding:0.9rem 1.3rem;font-style:italic;font-size:0.88rem;color:#8b5a3a;background-color:#faf6f0;border-top:1px solid #ede0d0}
+/* access */
+.access-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+.hours-dl{width:100%}
+.hours-item{display:flex;flex-wrap:wrap;gap:0 0.3rem;padding:0.7rem 0;border-bottom:1px solid rgba(158,64,40,0.1);align-items:baseline}
+.hours-day{font-weight:600;color:#5c3520;font-size:clamp(0.82rem,1.8vw,0.97rem);min-width:3.5em}
+.hours-time{color:#2c1a0e;font-size:clamp(0.82rem,1.8vw,0.97rem);font-weight:400}
+.hours-note-col{color:#8b5a3a;font-size:clamp(0.72rem,1.3vw,0.85rem)}
+.hours-note{margin-top:0.9rem;font-size:clamp(0.78rem,1.5vw,0.9rem);color:#9e4028;line-height:2}
+.access-col h3{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.2vw,1.4rem);color:#5c3520;margin-bottom:0.9rem}
+.access-col p{font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2;color:#2c1a0e;font-weight:400}
+.map-wrap{margin-top:1.8rem}
+.map-wrap iframe{width:100%;height:clamp(220px,35vw,380px);border:0;border-radius:6px;display:block}
+.map-caption{margin-top:0.5rem;font-size:clamp(0.68rem,1.2vw,0.82rem);color:#8b5a3a;text-align:center}
+.access-note{margin-top:1.8rem;padding:1.2rem 1.6rem;background-color:rgba(158,64,40,0.05);border-radius:0 6px 6px 0;border-left:4px solid #9e4028;font-size:clamp(0.85rem,1.8vw,1rem);color:#5c3520;line-height:2;font-style:italic}
+/* 道順ページ */
+.directions-list{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:2rem}
+.direction-step{display:flex;align-items:flex-start;gap:1.2rem;background-color:#faf6f0;border-radius:8px;padding:1.2rem;box-shadow:0 4px 16px rgba(44,26,14,0.07)}
+.step-num{width:40px;height:40px;border-radius:50%;background-color:#9e4028;color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.9rem;font-weight:500;flex-shrink:0;margin-top:2px}
+.step-photo{width:120px;min-width:120px;aspect-ratio:3/4;object-fit:cover;border-radius:6px;background-color:#ede0d0}
+.step-body{flex:1;min-width:0}
+.step-text{font-size:clamp(0.85rem,1.8vw,1rem);line-height:2;color:#2c1a0e;font-weight:400}
+.step-photo-large{width:240px;min-width:240px;aspect-ratio:3/4;object-fit:cover;border-radius:6px;background-color:#ede0d0}
+@media(max-width:540px){
+  .direction-step{flex-wrap:wrap}
+  .step-photo{width:100%;min-width:0;aspect-ratio:3/4;object-fit:cover}
+  .step-photo-large{width:100%;min-width:0;aspect-ratio:3/4;object-fit:cover}
+}
+
+
+@media(max-width:600px){
+  nav{height:auto;flex-direction:column;align-items:center;padding:0.5rem 1rem;gap:0.3rem}
+  .nav-logo{font-size:clamp(0.85rem,3.5vw,1rem);padding:0.2rem 0;text-align:center;width:100%;white-space:nowrap}
+  .nav-links{gap:0.5rem;flex-wrap:wrap;padding-bottom:0.4rem;justify-content:center;width:100%}
+  .nav-btn{font-size:0.7rem;letter-spacing:0.01em}
+  .page{padding-top:88px}
+  #page-home .hero{padding-top:0}
+  .hero{height:75svh;min-height:380px}
+  .hero-title{font-size:clamp(2.6rem,12vw,4.2rem)}
+  .hero-content{padding:2rem 1rem}
+}
+@media(max-width:540px){
+  .about-cols,.church-grid,.roasting-grid,.access-grid{grid-template-columns:1fr}
+  .intro-grid{grid-template-columns:1fr;gap:0.8rem}
+  .lineup-grid{grid-template-columns:1fr}
+  .coffee-item{border-right:none}
+  .footer-top{grid-template-columns:1fr;gap:1.5rem}
+}
+</style>
+</head>
+<body>
+<nav>
+<button class="nav-logo" data-page="home">OR Church &amp; Coffee</button>
+<ul class="nav-links">
+<li><button class="nav-btn" data-page="home">ホーム</button></li>
+<li><button class="nav-btn" data-page="about">教会</button></li>
+<li><button class="nav-btn" data-page="roasting">コーヒー</button></li>
+<li><button class="nav-btn" data-page="access">アクセス</button></li>
+<li><button class="nav-btn" data-page="schedule">イベント</button></li>
+<li><button class="nav-btn lang-btn" data-page="en-home" id="lang-toggle" style="color:#9e4028;border-bottom-color:#9e4028;opacity:1">ENGLISH</button></li>
+</ul>
+</nav>
+<!-- HOME -->
+<div class="page" id="page-home">
+<section class="hero">
+<img alt="OR Church and Coffee" class="hero-photo" src="images/home/cross.png"/>
+<div class="hero-content">
+<span class="hero-eyebrow">教会とコーヒー豆焙煎のお店</span>
+<h1 class="hero-title" style="font-style:normal">
+<span class="line1">OR Church</span>
+<span class="line2">and Coffee</span>
+</h1>
+<div class="hero-divider"></div>
+<p class="hero-sub">おいしいコーヒーを<br/>心を込めて焙煎します</p>
+<p class="hero-verse">OR（オル）＝ ヘブル語で「光」</p>
+</div>
+</section>
+<section class="welcome-sec">
+<div class="welcome-inner">
+<h2 class="reveal">光の中へ、ようこそ</h2>
+<span class="welcome-sub reveal">OR（オル）＝ ヘブル語で「光」</span>
+<p class="reveal">OR Church and Coffee は、心を込めて、あなたのためにコーヒーを焙煎する場所です。父が長年大切に育んできた「人と人が出会う場」の温かさを受け継ぎ、教会とコーヒー豆焙煎所として、新たなかたちで生まれ変わりました。</p>
+<p class="reveal">豆のふるさとと、人の想い、農園の物語を大切に、焙煎士があなたのために焙煎します。</p>
+<p class="reveal">クリスチャンでなくても、どなたでも大歓迎です。</p>
+<blockquote class="welcome-verse reveal">「大地はその実りを産み出しました。<br/>神が　私たちの神が<br/>私たちを祝福してくださいますように。」－ 詩篇67:6</blockquote>
+</div>
+</section>
+<section class="intro-sec">
+<div class="intro-grid">
+<button class="intro-card reveal" data-page="about"><div class="intro-icon">✝</div><h3>教会</h3><p>礼拝・バイブルスタディ・BBQなど。クリスチャンでなくても、どなたでも大歓迎です。</p><span class="intro-card-link">詳しく見る →</span></button>
+<button class="intro-card reveal" data-page="roasting"><div class="intro-icon">☕</div><h3>コーヒー</h3><p>生豆から約10〜15分。焙煎士が祈りを込めてあなただけの一杯を焙煎します。</p><span class="intro-card-link">詳しく見る →</span></button>
+<button class="intro-card reveal" data-page="schedule"><div class="intro-icon">📅</div><h3>イベント</h3><p>礼拝・イベント・各種集会の情報はこちらでご確認いただけます。</p><span class="intro-card-link">詳しく見る →</span></button>
+</div>
+</section>
+</div>
+<!-- ABOUT -->
+<div class="page" id="page-about">
+<div class="page-header"><h1>教会</h1><p class="sub">神の愛と共に心安らぐひとときを</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)">
+<div class="inner" style="text-align:center">
+<img alt="教会内部" class="reveal" src="images/church/interior.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/>
+</div>
+</section>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,4vw,2.8rem);color:#5c3520;text-align:center;margin-bottom:0.4rem">OR（オル）とは？</h2>
+<p class="reveal" style="text-align:center;font-size:clamp(0.65rem,1.2vw,0.8rem);letter-spacing:0.22em;color:#9e4028;margin-bottom:2rem">OR（オル）＝ ヘブル語で「光」</p>
+<div class="thin-rule"></div>
+<div class="about-cols">
+<div class="reveal"><p>OR Church and Coffee は、心を込めて、あなたのためにコーヒーを焙煎する場所です。父が長年大切に育んできた「人と人が出会う場」の温かさを受け継ぎ、教会とコーヒー豆焙煎所として、新たなかたちで生まれ変わりました。</p><p>私たちは、神の恵みによって育まれたコーヒー豆の一粒ひと粒に感謝と祈りを込め、焙煎しています。</p><p>「大地はその実りを産み出しました。<br/>神が　私たちの神が<br/>私たちを祝福してくださいますように。」－ 詩篇67:6</p><p>世界各地の農園で丹精込めて育てられた豆には、神の恵みと、生産者や人々の祈りが込められています。その物語を、ぜひ一杯のコーヒーを通して味わってみてください。</p></div>
+<div class="reveal"><p>ここで生まれ育った焙煎士が、コーヒーひと粒の背後にある物語を語りながら、あなたのために焙煎を施します。OR Church and Coffee で、神の愛とともに、豊かな香りと安らぎのひとときを お楽しみいただけますように。</p><p>店内では、不定期で 礼拝、バイブルスタディ、賛美やゴスペルのワークショップを開催しています。クリスチャンでなくても、どなたでも大歓迎です。</p><p>温もりを感じ、心が照らされる時間を過ごしに、どうぞお気軽にお立ち寄りください。</p></div>
+</div>
+<blockquote class="verse-block reveal" style="margin-top:2rem">「このように、あなたがたの光を人々の前で輝かせなさい。人々があなたがたの良い行いを見て、天におられるあなたがたの父をあがめるようになるためです。」— マタイ5:16</blockquote>
+<p class="disclaimer reveal">OR(オル)Church and Coffeeは、エホバの証人(ものみの塔)、統一教会(世界平和統一家庭連合)、モルモン教(末日聖徒イエス・キリスト教会)、クオンパ、タラッパン(福音宣教教会、レムナント学園)とは一切関係ありません。</p>
+</div></section>
+<section class="sec" style="background-color:#ede0d0"><div class="inner">
+<div class="sec-label reveal"><div class="badge">教会</div><span class="sec-title">神の愛と共に心安らぐひとときを</span></div>
+<div class="thin-rule"></div>
+<div class="card reveal"><p><strong>礼拝とネットワーキング</strong></p><p>共に礼拝を捧げ、交わりの中で神が与えてくださる日々の恵みに感謝するひとときを過ごします。礼拝後は、皆さんとの交流を通して互いに励まし合い、つながりを深めたいと願っています。</p><p>また、ミニストリーによる賛美集会や各種イベントを行いたい方のために、スペースの貸し出しも受け付けています。用いられたいビジョンやアイデアがある方は、どうぞお気軽にご相談ください。</p></div>
+</div></section>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<div class="sec-label reveal"><div class="badge">指針</div><span class="sec-title">教会の7つの本質</span></div>
+<div class="thin-rule"></div>
+<p class="reveal" style="font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:#2c1a0e;margin-bottom:1.8rem">JCMNが掲げる「教会の7つの本質」は、2000年に世界中の教会リーダーたちが集まり、聖書に基づく教会の在り方を話し合って導き出されたものです。方法論ではなく「本質」に焦点を当てており、教会がいのちに満ちた共同体として成長するための指針として、多くの信徒に力強い土台を与えています。</p>
+<div class="reveal" style="text-align:center;margin-bottom:2.5rem">
+<img alt="教会の7つの本質" src="images/church/7_essentials.png" style="max-width:50%;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.1)"/>
+<p style="margin-top:0.7rem;font-size:clamp(0.72rem,1.3vw,0.85rem);color:#8b5a3a;font-style:italic">「かさのイエでねて」— 7つの本質を覚えるための合言葉</p>
+</div>
+<div class="church-grid">
+<div class="card reveal"><h3>【関係】</h3><p>神様との深まり、神の家族とのつながり。礼拝では、集う一人ひとりがありのままの自分で神様の御前に出て、神様との関係を深めています。</p></div>
+<div class="card reveal"><h3>【参加】</h3><p>共に担う喜び。「あなたがたのからだを、神に喜ばれる、聖なる、生きたささげ物として献げなさい」（ローマ12:1）。奉仕を通して存在が神様に向かって開かれていきます。</p></div>
+<div class="card reveal"><h3>【能力付与】</h3><p>賜物を信仰で用いる。神様は一人ひとりに使命を託してくださいます。与えられた賜物を土に埋めるのではなく、信仰をもって分かち合い、隣人の徳を高める器として用いられることを願っています。</p></div>
+<div class="card reveal"><h3>【イエス様中心】</h3><p>本当の自由と平安。「もはや私が生きているのではなく、キリストが私のうちに生きておられるのです」（ガラテヤ2:20）。聖霊様が働かれる「イエス様中心」の教会でありたいと願っています。</p></div>
+<div class="card reveal"><h3>【伝道と増殖】</h3><p>愛のデリバリー。「世の光・地の塩」として歩む姿は、聖霊様の働きによって生まれる愛のデリバリーです。救われた魂への深い愛を、何より大切にしています。</p></div>
+<div class="card reveal"><h3>【ネットワーク】</h3><p>教会同士のつながり。「キリストによってからだ全体は、あらゆる節々を支えとして組み合わされ、つなぎ合わされ…愛のうちに建てられることになります」（エペソ4:16）</p></div>
+<div class="card reveal" style="grid-column:1/-1"><h3>【適応可能な構造】</h3><p>柔軟さがいのちを育む。オルチャーチでは、都市型のライフスタイルに対応するため、個人礼拝・オンライン礼拝・小グループでの交わりを積極的に取り入れています。「新しいぶどう酒は新しい革袋に」——このイエス様の教えに従い、柔軟な構造を持つことが、オルチャーチをいのちある教会に成長させてくださると信じています。</p></div>
+</div>
+</div></section>
+</div>
+<!-- ROASTING -->
+<div class="page" id="page-roasting">
+<div class="page-header"><h1>コーヒー</h1><p class="sub">恵みのひととき</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)">
+<div class="inner" style="text-align:center">
+<img alt="恵みのひととき" class="reveal" src="images/coffee/piano.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/>
+</div>
+</section>
+<section class="sec" style="background-color:#2c1a0e;color:#f5ede3"><div class="inner">
+<div class="sec-label reveal"><div class="badge" style="background-color:#c49a5a">焙煎</div><span class="sec-title" style="color:#f5ede3">コーヒー焙煎 &amp; 恵みのひととき</span></div>
+<div class="thin-rule" style="background:linear-gradient(to right,transparent,rgba(196,154,90,0.4),transparent)"></div>
+<div class="roasting-grid">
+<div class="reveal"><span class="roasting-verse">「こういうわけで、あなたがたは、食べるにも飲むにも、何をするにも、すべて神の栄光を現すためにしなさい。」－ 1コリント10:31</span><p>OR Church and Coffee では、あなたのために生豆からじっくり焙煎。約10〜15分で、香り豊かなコーヒーが完成します。</p><p>焙煎士が選び抜いた特別なコーヒーを、あなたのために祈りを込めて焙煎します。それぞれのコーヒー豆には、神の恵みと人々の物語が宿っています。</p><p>豆のふるさとと、人の想い、農園の物語を大切に、焙煎士があなたのために焙煎します。</p><p class="food-note">食品衛生責任者：3553708</p></div>
+<div class="chill-box reveal"><h3>Chill &amp; くつろぎ</h3><p>OR Church and Coffee は、好きなように過ごしていただける場所。焙煎を待つ間は、試飲を楽しみながら、心を休める時間をお過ごしください。　</p><p style="margin-top:0.8rem">新しい仲間との出会い、深まる信仰、そして香り高いコーヒーとともに、神の愛を感じるひとときを。</p></div>
+</div>
+</div></section>
+<section class="sec" style="background-color:#faf6f0"><div class="inner" style="max-width:620px">
+<blockquote class="verse-block reveal">「一杯のコーヒーとともに、神の豊かな祝福がありますように。」</blockquote>
+<p class="reveal" style="margin-top:1.2rem;font-size:clamp(0.85rem,2vw,1rem);line-height:2.1;color:#2c1a0e">OR Church and Coffee で、神の愛とともに、豊かな香りをお楽しみください。<br/><span style="color:#9e4028;border-bottom:1px solid rgba(158,64,40,0.4)">↓ 下のラインアップをご覧ください</span></p>
+</div></section>
+<section class="sec" style="background-color:#faf6f0">
+<div class="inner">
+<h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:400;color:#5c3520;text-align:center;margin-bottom:0.5rem">ラインアップ</h2>
+<p class="reveal" style="text-align:center;font-size:clamp(0.78rem,1.4vw,0.92rem);color:#8b5a3a;margin-bottom:2rem">世界の農園から届いた、神の恵みと人々の物語が宿るコーヒー豆</p>
+<div class="lineup-grid reveal">
+<div class="coffee-item"><p class="c-origin">Brazil</p><p class="c-name">ジェレジン農園</p><p class="c-desc">アブラハムがカナンで初めて祭壇を築き、モーセが「祝福の山」として神より示された山が名前の由来（申命記11:29）。牧師が祈りながら育てた農園。</p><span class="c-tag">有機JAS</span></div>
+<div class="coffee-item"><p class="c-origin">Brazil</p><p class="c-name">パライーゾ農園</p><p class="c-desc">牧師のアドバイスと毎日1万回の感謝からできた、パライーゾ（楽園）の名を持つ農園。</p><span class="c-tag">有機JAS</span></div>
+<div class="coffee-item"><p class="c-origin">India</p><p class="c-name">ポアブス農園</p><p class="c-desc">敬虔なクリスチャンがオーナー。畑の真ん中には教会があり、働き手が集います。</p><span class="c-tag">有機JAS + デメター認証</span></div>
+<div class="coffee-item"><p class="c-origin">El Salvador</p><p class="c-name">ロマ・ラ・グロリア農園</p><p class="c-desc">スペイン語で「救世主」という意味のエルサルバドルから「栄光の丘」という農園のレッドハニー。</p><span class="c-tag">Red Honey</span></div>
+<div class="coffee-item"><p class="c-origin">El Salvador</p><p class="c-name">ラ・ディビナ・プロビデンシア農園</p><p class="c-desc">スペイン語で「神の摂理」を意味する農園。コーヒーの声を聴きながら育てた豆はCOR2020エルサルバドルで第一位。</p><span class="c-tag">受賞豆</span></div>
+<div class="coffee-item"><p class="c-origin">Yemen</p><p class="c-name">モカハラズシャムス</p><p class="c-desc">ノアの方舟が着いたとされるサナア州マナーカ西ハラズから届いたフルーティで繊細な酸味。</p></div>
+<div class="coffee-item"><p class="c-origin">Guatemala</p><p class="c-name">アンディグアSHB レタナ農園</p><p class="c-desc">カトリックの修道士たちの手により運営。レタナ神父が農園名の由来。希少で味の良いイエローブルボン。</p><span class="c-tag">Yellow Bourbon</span></div>
+<div class="coffee-item"><p class="c-origin">Colombia</p><p class="c-name">エルパライソ農園</p><p class="c-desc">コロンビアの品評会で優勝した「天国」を意味するパライソ農園から。オンリーワンの香りと口当たり。</p><span class="c-tag">品評会優勝</span></div>
+<div class="lineup-etc">etc.</div>
+</div>
+</div>
+</section>
+<section class="sec" style="background-color:#ede0d0"><div class="inner">
+<div class="reveal" style="display:flex;align-items:center;gap:clamp(1.5rem,4vw,3.5rem);flex-wrap:wrap">
+<div style="flex:1;min-width:200px">
+<h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.7rem);font-weight:600;color:#5c3520;margin-bottom:0.8rem">ご購入はコチラから</h3>
+<p style="font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:#2c1a0e">オンラインでもコーヒー豆をご購入いただけます。QRコードを読み取るか、下のリンクからどうぞ。</p>
+<p style="margin-top:0.8rem;font-size:clamp(0.75rem,1.5vw,0.88rem);color:#9e4028;font-style:italic">スマートフォンのカメラでQRコードを読み取ってください。</p>
+<a href="https://coffee-or.stores.jp/" onmouseout="this.style.backgroundColor='#9e4028'" onmouseover="this.style.backgroundColor='#7a3020'" rel="noopener" style="display:inline-block;margin-top:1rem;padding:0.55rem 1.3rem;background-color:#9e4028;color:#f5ede3;font-family:'Noto Sans JP',sans-serif;font-size:clamp(0.78rem,1.5vw,0.92rem);text-decoration:none;border-radius:4px;letter-spacing:0.05em;transition:background-color 0.2s" target="_blank">オーダー焙煎店 →</a>
+</div>
+<div style="flex-shrink:0;text-align:center">
+<img alt="QRコード" src="images/coffee/sale_qr.png" style="width:140px;height:140px;border-radius:6px"/>
+</div>
+</div>
+</div></section>
+</div>
+<!-- ACCESS -->
+<div class="page" id="page-access">
+<div class="page-header"><h1>アクセス</h1><p class="sub">東京都墨田区八広 — 京成電鉄押上線八広(やひろ)駅 南口 徒歩5分</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<div class="access-grid">
+<div class="reveal">
+<h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.5rem);color:#5c3520;margin-bottom:0.9rem">営業時間</h3>
+<div class="hours-dl">
+<div class="hours-item"><span class="hours-time">不定期営業のため、ご来店の際は事前にご連絡をいただけますようお願いいたします。</span></div>
+</div>
+<p class="hours-note">※ 日曜日 11:00～12:00 は礼拝を行っています。<br/>（どなたでもご参加いただけます。）</p>
+</div>
+<div class="access-col reveal">
+<h3>お問い合わせ &amp; アクセス</h3>
+<p style="line-height:1.9">
+        Tel：<span id="tel-disp" style="color:#9e4028;cursor:pointer">080-4329-6712</span><br/>
+        Mail：<span id="mail-disp" style="color:#9e4028;cursor:pointer"></span><br/>
+        伝道師：坂本 美由紀（さかもと みゆき）
+      </p>
+<p style="line-height:1.9;margin-top:1rem">〒131-0041<br/>東京都墨田区八広5−27−12<br/>京成電鉄押上線八広(やひろ)駅 南口 徒歩5分<br/>駐車場2台あり（満車の場合は周辺駐車場をご利用ください）</p>
+</div>
+</div>
+<div class="map-wrap reveal">
+<img alt="地図" src="images/access/map.png" style="width:100%;border-radius:6px;display:block"/>
+<p class="map-caption">東京都墨田区八広5−27−12　／　京成電鉄押上線八広(やひろ)駅 南口 徒歩5分</p>
+</div>
+<div class="access-note reveal">「求めなさい。そうすれば与えられます。探しなさい。そうすれば見出します。たたきなさい。そうすれば開かれます。」— マタイ7:7<br/>ご来店の際はお気軽にお電話またはメールでお問い合わせください。初めての方も大歓迎です。</div>
+</div></section>
+<!-- 道順セクション（日本語） -->
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.5rem);font-weight:400;color:#5c3520;text-align:center;margin-bottom:0.4rem">道順</h2>
+<p class="reveal" style="text-align:center;font-size:clamp(0.78rem,1.5vw,0.92rem);color:#8b5a3a;margin-bottom:2.5rem">八広駅 南口からの道順</p>
+<div class="directions-list">
+<div class="direction-step reveal"><div class="step-num">1</div><img alt="道順1" class="step-photo" src="images/access/d_01.png"/><div class="step-body"><p class="step-text">改札を出たら左へ曲がります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">2</div><img alt="道順2" class="step-photo" src="images/access/d_02.png"/><div class="step-body"><p class="step-text">南口を降ります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">3</div><img alt="道順3" class="step-photo" src="images/access/d_03.png"/><div class="step-body"><p class="step-text">降りたら斜め左へ進みます。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">4</div><img alt="道順4" class="step-photo" src="images/access/d_04.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">5</div><img alt="道順5" class="step-photo" src="images/access/d_05.png"/><div class="step-body"><p class="step-text">大通りまで来たら左へ曲がります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">6</div><img alt="道順6" class="step-photo" src="images/access/d_06.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">7</div><img alt="道順7" class="step-photo" src="images/access/d_07.png"/><div class="step-body"><p class="step-text">右へ曲がり横断歩道を渡ります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">8</div><img alt="道順8" class="step-photo" src="images/access/d_08.png"/><div class="step-body"><p class="step-text">右へ曲がり直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">9</div><img alt="道順9" class="step-photo" src="images/access/d_09.png"/><div class="step-body"><p class="step-text">左へ曲がります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">10</div><img alt="道順10" class="step-photo" src="images/access/d_10.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">11</div><img alt="道順11" class="step-photo" src="images/access/d_11.png"/><div class="step-body"><p class="step-text">斜め右へ進みます。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">12</div><img alt="道順12" class="step-photo" src="images/access/d_12.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">13</div><img alt="道順13" class="step-photo" src="images/access/d_13.png"/><div class="step-body"><p class="step-text">左へ曲がり直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">14</div><img alt="道順14" class="step-photo" src="images/access/d_14.png"/><div class="step-body"><p class="step-text">左の道路を直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">15</div><img alt="道順15" class="step-photo" src="images/access/d_15.png"/><div class="step-body"><p class="step-text">右側にある電柱の隣にあるクリーム色の建物が教会になります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">16</div><img alt="道順16" class="step-photo" src="images/access/d_16.png"/><div class="step-body"><p class="step-text">外壁が"イエスの血潮"にデザインされています。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">17</div><img alt="道順17" class="step-photo-large" src="images/access/d_17.png"/><div class="step-body"><p class="step-text">教会に着きました！</p></div></div>
+</div>
+</div></section>
+</div>
+<!-- SCHEDULE -->
+<div class="page" id="page-schedule">
+<div class="page-header"><h1>イベント</h1><p class="sub">礼拝・イベント・各種集会のご案内</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<div class="reveal" style="text-align:center;margin-bottom:1.5rem">
+<p style="font-size:clamp(0.82rem,1.8vw,0.97rem);color:#5c3520;line-height:2">最新のイベント情報をご確認ください。<br/>ご不明な点はお気軽にお問い合わせください。</p>
+</div>
+<!-- イベント画像 -->
+<div class="event-flex-grid">
+<div class="event-flex-item" onclick="openLightbox(this.querySelector('img').src)"><img alt="イベント" src="images/events/20260620.png" style="width:100%;display:block;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.08);cursor:zoom-in"/></div>
+<div class="event-flex-item">
+<img alt="イベント" src="images/events/20260731.png" style="width:100%;display:block;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.08);cursor:zoom-in" onclick="openLightbox(this.src)"/>
+<div style="margin-top:0.6rem;font-size:clamp(0.78rem,1.5vw,0.92rem);line-height:2;color:#5c3520;padding:0.7rem 1rem;background-color:rgba(158,64,40,0.05);border-radius:6px;border-left:3px solid #9e4028">
+<span style="font-weight:600;display:block;margin-bottom:0.6rem">廣瀬みちる「Prayer」ピアノソロ</span>
+<span style="display:block;margin-bottom:0.6rem">ご参加には事前予約が必要です。ご予約は下記までお願いいたします。ご予約の際は、お名前と参加人数をお知らせください。</span>
+<span style="display:block">Tel：<span id="tel-disp-schedule" style="color:#9e4028;cursor:pointer">080-4329-6712</span></span>
+<span style="display:block">Mail：<span id="mail-disp-schedule" style="color:#9e4028;cursor:pointer">orchrch2024@gmail.com</span></span>
+</div>
+</div>
+<div class="event-flex-item" onclick="openLightbox(this.querySelector('img').src)"><img alt="イベント" src="images/events/20260801.png" style="width:100%;display:block;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.08);cursor:zoom-in"/></div>
+</div>
+<div class="reveal" style="max-width:1000px; margin:1.5rem auto 0; overflow:hidden; border-radius:8px; border:1px solid #ccc;">
+<div style="height: 516px; overflow: hidden; position: relative;">
+<iframe frameborder="0" height="600" scrolling="no" src="https://calendar.google.com/calendar/embed?src=cd835c462f14f55e67cf32087da1cf1d748cd83166491022b53fb0d985e545fb%40group.calendar.google.com&amp;ctz=Asia%2FTokyo&amp;color=%23ede0d0&amp;hl=ja&amp;showNav=0&amp;showTitle=0&amp;showTz=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA" style="border:0; position: absolute; top: -48px; left: 0;" width="100%">
+</iframe>
+</div>
+</div>
+</div></section>
+</div>
+<style>
+
+
+
+  .cal-event-dot{font-size:0.55rem;padding:2px 2px;line-height:1.4}
+  .cal-date{font-size:0.75rem;width:20px;height:20px}
+}
+</style>
+<!-- ENGLISH VERSION -->
+<div class="page" id="page-en-home">
+<section class="hero">
+<img alt="OR Church and Coffee" class="hero-photo" src="images/home/cross.png"/>
+<div class="hero-content">
+<span class="hero-eyebrow">Church &amp; Coffee Roaster</span>
+<h1 class="hero-title" style="font-style:normal">
+<span class="line1">OR Church</span>
+<span class="line2">and Coffee</span>
+</h1>
+<div class="hero-divider"></div>
+<p class="hero-sub">Freshly roasted coffee,<br/>crafted with care and prayer.</p>
+<p class="hero-verse">OR (pronounced "or") means "Light" in Hebrew</p>
+</div>
+</section>
+<section class="welcome-sec">
+<div class="welcome-inner">
+<h2 class="reveal">Welcome to the Light</h2>
+<span class="welcome-sub reveal">OR — "Light" in Hebrew</span>
+<p class="reveal">A place where we walk in the light and roast coffee with heart. Our shop was born from the warmth of connection that our father cherished for years — now reborn as a church and coffee roastery.</p>
+<p class="reveal">The roaster will share the origin of the beans, the people behind them, and the story of each farm — all while roasting a batch just for you.</p>
+<p class="reveal">Everyone is welcome, whether Christian or not.</p>
+<blockquote class="welcome-verse reveal">"The earth has yielded its produce.<br/>God, our God, blesses us.<br/>May God bless us." — Psalm 67:6</blockquote>
+</div>
+</section>
+<section class="intro-sec">
+<div class="intro-grid">
+<button class="intro-card reveal" data-page="en-church"><div class="intro-icon">✝</div><h3>CHURCH</h3><p>Worship, Bible study, BBQ and more. Everyone is welcome, regardless of faith.</p><span class="intro-card-link">Learn more →</span></button>
+<button class="intro-card reveal" data-page="en-coffee"><div class="intro-icon">☕</div><h3>COFFEE</h3><p>From green beans to your cup in 10–15 minutes. Roasted with prayer, just for you.</p><span class="intro-card-link">Learn more →</span></button>
+<button class="intro-card reveal" data-page="en-schedule"><div class="intro-icon">📅</div><h3>EVENTS</h3><p>Check our latest worship services, events and gatherings here.</p><span class="intro-card-link">Learn more →</span></button>
+</div>
+</section>
+</div>
+<div class="page" id="page-en-church">
+<div class="page-header"><h1>CHURCH</h1><p class="sub">A place of warmth, faith, and community</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)">
+<div class="inner" style="text-align:center">
+<img alt="Church interior" class="reveal" src="images/church/interior.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/>
+</div>
+</section>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,4vw,2.8rem);color:#5c3520;text-align:center;margin-bottom:0.4rem">What is OR (オル)?</h2>
+<p class="reveal" style="text-align:center;font-size:clamp(0.65rem,1.2vw,0.8rem);letter-spacing:0.22em;color:#9e4028;margin-bottom:2rem">OR means "Light" in Hebrew</p>
+<div class="thin-rule"></div>
+<div class="about-cols">
+<div class="reveal"><p>OR Church and Coffee is a place where we roast coffee with care, just for you. We carry on the warmth of connection that our father nurtured over many years, and have been reborn as a church and coffee roastery in a new form.</p><p>We give thanks and pray over every single bean, knowing it has been nurtured by God's grace.</p><p>"The earth has yielded its produce.<br/>God, our God, blesses us.<br/>May God bless us." — Psalm 67:6</p><p>The beans grown with care at farms around the world carry within them God's grace and the prayers of those who grew them. We invite you to taste that story in every cup.</p></div>
+<div class="reveal"><p>Our roaster, raised right here, roasts for you while sharing the story behind every bean. OR Church and Coffee — may you enjoy a time of rich aroma and rest, wrapped in God's love.</p><p>We regularly hold worship, Bible study, and praise and gospel workshops. Everyone is welcome, whether Christian or not.</p><p>Come spend time feeling warmth and having your heart illuminated — please feel free to drop by anytime.</p></div>
+</div>
+<blockquote class="verse-block reveal" style="margin-top:2rem">"In the same way, let your light shine before others, that they may see your good deeds and glorify your Father in heaven." — Matthew 5:16</blockquote>
+<p class="disclaimer reveal">OR Church and Coffee has no affiliation with Jehovah's Witnesses, the Unification Church, the Church of Jesus Christ of Latter-day Saints, Quompa, or Talappan (Gospel Missionary Church / Remnant Academy).</p>
+</div></section>
+<section class="sec" style="background-color:#ede0d0"><div class="inner">
+<div class="sec-label reveal"><div class="badge">Church</div><span class="sec-title">A Time of Rest and Peace in God's Love</span></div>
+<div class="thin-rule"></div>
+<div class="card reveal"><p><strong>Worship &amp; Networking</strong></p><p>Let us worship together and give thanks for the daily blessings God gives us in fellowship. After worship, through connecting with one another, we hope to encourage each other and grow deeper in relationship.</p><p>We also open our space for praise gatherings and various events organized by ministries. If you have a vision or idea you'd like to see come to life, please feel free to reach out.</p></div>
+</div></section>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<div class="sec-label reveal"><div class="badge">Vision</div><span class="sec-title">The 7 Essentials of the Church</span></div>
+<div class="thin-rule"></div>
+<p class="reveal" style="font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:#2c1a0e;margin-bottom:1.8rem">The "7 Essentials of the Church" put forward by JCMN were drawn up in 2000 when church leaders from around the world gathered to discuss what a biblically grounded church looks like. Focused on "essentials" rather than methods, these principles serve as a powerful foundation for many believers — a guide for the church to grow as a life-filled community.</p>
+<div class="reveal" style="text-align:center;margin-bottom:2.5rem">
+<img alt="7 Essentials of the Church" src="images/church/7_essentials.png" style="max-width:50%;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.1)"/>
+<p style="margin-top:0.7rem;font-size:clamp(0.72rem,1.3vw,0.85rem);color:#8b5a3a;font-style:italic">"Kasa no Ie de Nete" — a Japanese mnemonic for remembering all 7 essentials</p>
+</div>
+<div class="church-grid">
+<div class="card reveal"><h3>Relationships</h3><p>Deepening with God and connecting as His family. In our worship, each person comes before God just as they are, building a deeper relationship with Him and with one another through prayer.</p></div>
+<div class="card reveal"><h3>Participation</h3><p>The joy of serving together. "Offer your bodies as a living sacrifice, holy and pleasing to God." (Romans 12:1). Through service, our very being is opened toward God.</p></div>
+<div class="card reveal"><h3>Empowerment</h3><p>Using gifts in faith. God entrusts each person with a calling. Rather than burying our gifts, we seek to be vessels that share them in faith and build up those around us.</p></div>
+<div class="card reveal"><h3>Jesus-Centred</h3><p>True freedom and peace. "I no longer live, but Christ lives in me." (Galatians 2:20). We seek to be a church where the Holy Spirit moves — centred entirely on Jesus.</p></div>
+<div class="card reveal"><h3>Evangelism &amp; Multiplication</h3><p>A delivery of love. Living as "the light of the world and the salt of the earth" is a delivery of love born through the work of the Holy Spirit. We cherish a deep love for every soul that is saved.</p></div>
+<div class="card reveal"><h3>Networks</h3><p>Connection between churches. "The whole body, joined and held together by every supporting ligament, grows and builds itself up in love." (Ephesians 4:16). We pray for churches to support one another and extend God's kingdom.</p></div>
+<div class="card reveal" style="grid-column:1/-1"><h3>Adaptable Structures</h3><p>Flexibility nurtures life. OR Church actively embraces personal worship, online worship, and small-group fellowship to meet the needs of an urban lifestyle. Following Jesus' teaching — "new wine into new wineskins" — we believe that a flexible structure will allow OR Church to grow as a life-filled church.</p></div>
+</div>
+</div></section>
+</div>
+<div class="page" id="page-en-coffee">
+<div class="page-header"><h1>COFFEE</h1><p class="sub">A moment of grace</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)">
+<div class="inner" style="text-align:center">
+<img alt="A moment of grace" class="reveal" src="images/coffee/piano.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/>
+</div>
+</section>
+<section class="sec" style="background-color:#2c1a0e;color:#f5ede3"><div class="inner">
+<div class="sec-label reveal"><div class="badge" style="background-color:#c49a5a">Roast</div><span class="sec-title" style="color:#f5ede3">Coffee Roasting &amp; a Moment of Grace</span></div>
+<div class="thin-rule" style="background:linear-gradient(to right,transparent,rgba(196,154,90,0.4),transparent)"></div>
+<div class="roasting-grid">
+<div class="reveal"><span class="roasting-verse">"So then, whether you eat or drink or whatever you do, do everything for the glory of God." — 1 Corinthians 10:31</span><p>At OR Church and Coffee, we roast green beans slowly just for you. In about 10–15 minutes, your aromatic coffee is ready.</p><p>The roaster carefully selects and prayerfully roasts each special coffee for you. Every bean carries the grace of God and the stories of the people who grew it.</p><p>The roaster will share the origin of the beans, the people behind them, and the story of each farm — all while roasting your very own batch.</p><p class="food-note">Food Hygiene License No.: 3553708</p></div>
+<div class="chill-box reveal"><h3>Chill &amp; Relax</h3><p>OR Church and Coffee is a place where you can spend time however you like. While waiting for your roast, enjoy a tasting and take a moment to rest your heart.  </p><p style="margin-top:0.8rem">New friendships, deepening faith, and aromatic coffee — experience the love of God in every visit.</p></div>
+</div>
+</div></section>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<blockquote class="verse-block reveal">"May the rich blessings of God accompany every cup of coffee."</blockquote>
+<p class="reveal" style="margin-top:1.2rem;font-size:clamp(0.85rem,2vw,1rem);line-height:2.1;color:#2c1a0e">Enjoy the richness of God's love at OR Church and Coffee.<br/><span style="color:#9e4028;border-bottom:1px solid rgba(158,64,40,0.4)">↓ See our coffee lineup below</span></p>
+</div></section>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,3rem);font-weight:400;color:#5c3520;text-align:center;margin-bottom:0.5rem">LINEUP</h2>
+<p class="reveal" style="text-align:center;font-size:clamp(0.78rem,1.4vw,0.92rem);color:#8b5a3a;margin-bottom:2rem">Coffee beans carrying God's grace and the stories of people from farms around the world</p>
+<div class="lineup-grid reveal">
+<div class="coffee-item"><p class="c-origin">Brazil</p><p class="c-name">Geredin Farm</p><p class="c-desc">Named after the mountain where Abraham first built an altar and Moses was shown as the "Mountain of Blessing" (Deut. 11:29). Grown by a pastor with prayer.</p><span class="c-tag">Organic JAS</span></div>
+<div class="coffee-item"><p class="c-origin">Brazil</p><p class="c-name">Paraízo Farm</p><p class="c-desc">Born from a pastor's guidance and 10,000 daily expressions of gratitude — named Paraízo, meaning "Paradise."</p><span class="c-tag">Organic JAS</span></div>
+<div class="coffee-item"><p class="c-origin">India</p><p class="c-name">Pourbus Farm</p><p class="c-desc">Owned by a devout Christian. A church stands in the middle of the fields where workers gather.</p><span class="c-tag">Organic JAS + Demeter</span></div>
+<div class="coffee-item"><p class="c-origin">El Salvador</p><p class="c-name">Loma La Gloria Farm</p><p class="c-desc">From El Salvador ("The Savior"), the "Hill of Glory" farm's Red Honey process.</p><span class="c-tag">Red Honey</span></div>
+<div class="coffee-item"><p class="c-origin">El Salvador</p><p class="c-name">La Divina Providencia Farm</p><p class="c-desc">"Divine Providence" in Spanish — beans grown by listening to the coffee plant, #1 at COR2020 El Salvador.</p><span class="c-tag">Award Winner</span></div>
+<div class="coffee-item"><p class="c-origin">Yemen</p><p class="c-name">Mocha Haraz Shams</p><p class="c-desc">From West Haraz, Manakha, Sana'a — believed to be where Noah's Ark landed. Fruity with delicate acidity.</p></div>
+<div class="coffee-item"><p class="c-origin">Guatemala</p><p class="c-name">Antigua SHB Retana Farm</p><p class="c-desc">Run by Catholic monks. Named after Father Retana. Rare and flavorful Yellow Bourbon.</p><span class="c-tag">Yellow Bourbon</span></div>
+<div class="coffee-item"><p class="c-origin">Colombia</p><p class="c-name">El Paraíso Farm</p><p class="c-desc">Winner of a Colombian cupping competition. "El Paraíso" means Paradise — unique aroma and mouthfeel.</p><span class="c-tag">Competition Winner</span></div>
+<div class="lineup-etc">etc.</div>
+</div>
+</div></section>
+<section class="sec" style="background-color:#ede0d0"><div class="inner">
+<div class="reveal" style="display:flex;align-items:center;gap:clamp(1.5rem,4vw,3.5rem);flex-wrap:wrap">
+<div style="flex:1;min-width:200px">
+<h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.7rem);font-weight:600;color:#5c3520;margin-bottom:0.8rem">Order Online</h3>
+<p style="font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:#2c1a0e">You can also purchase our coffee beans online. Scan the QR code to visit our shop page.</p>
+<p style="margin-top:0.8rem;font-size:clamp(0.75rem,1.5vw,0.88rem);color:#9e4028;font-style:italic">Point your smartphone camera at the QR code to get started.</p>
+<a href="https://coffee-or.stores.jp/" onmouseout="this.style.backgroundColor='#9e4028'" onmouseover="this.style.backgroundColor='#7a3020'" rel="noopener" style="display:inline-block;margin-top:1rem;padding:0.55rem 1.3rem;background-color:#9e4028;color:#f5ede3;font-family:'Noto Sans JP',sans-serif;font-size:clamp(0.78rem,1.5vw,0.92rem);text-decoration:none;border-radius:4px;letter-spacing:0.05em;transition:background-color 0.2s" target="_blank">Order Roastery Shop →</a>
+</div>
+<div style="flex-shrink:0;text-align:center">
+<img alt="QR Code" src="images/coffee/sale_qr.png" style="width:140px;height:140px;border-radius:6px"/>
+</div>
+</div>
+</div></section>
+</div>
+<div class="page" id="page-en-access">
+<div class="page-header"><h1>ACCESS</h1><p class="sub">Yahiro, Sumida City, Tokyo — 5 min walk from Yahiro Station (South Exit)</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<div class="access-grid">
+<div class="reveal">
+<h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.5rem);color:#5c3520;margin-bottom:0.9rem">Opening Hours</h3>
+<div class="hours-dl">
+<div class="hours-item"><span class="hours-time">We operate on irregular hours — please contact us in advance before visiting.</span></div>
+</div>
+<p class="hours-note">※ Worship is held on Sundays 11:00–12:00.<br/>(All are welcome to join.)</p>
+</div>
+<div class="access-col reveal">
+<h3>Contact &amp; Access</h3>
+<p style="line-height:1.9">
+        Tel：<span id="en-tel-disp" style="color:#9e4028;cursor:pointer">080-4329-6712</span><br/>
+        Mail：<span id="en-mail-disp" style="color:#9e4028;cursor:pointer"></span><br/>
+        Evangelist: Miyuki Sakamoto
+      </p>
+<p style="line-height:1.9;margin-top:1rem">
+        〒131-0041<br/>5-27-12 Yahiro, Sumida City, Tokyo<br/>
+        5 min walk from Yahiro Station (South Exit),<br/>Keisei Oshiage Line<br/>
+        2 parking spaces available<br/>(Please use nearby parking if full)
+      </p>
+</div>
+</div>
+<div class="map-wrap reveal">
+<img alt="Map" src="images/access/map.png" style="width:100%;border-radius:6px;display:block"/>
+<p class="map-caption">5-27-12 Yahiro, Sumida City, Tokyo  /  5 min walk from Yahiro Station South Exit</p>
+</div>
+<div class="access-note reveal">
+    "Ask and it will be given to you; seek and you will find; knock and the door will be opened to you." — Matthew 7:7<br/>
+    Please feel free to contact us by phone or email before visiting. First-time visitors are very welcome.
+  </div>
+</div></section>
+<!-- Directions section (English) -->
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.5rem);font-weight:400;color:#5c3520;text-align:center;margin-bottom:0.4rem">Directions</h2>
+<p class="reveal" style="text-align:center;font-size:clamp(0.78rem,1.5vw,0.92rem);color:#8b5a3a;margin-bottom:2.5rem">Walking directions from Yahiro Station (South Exit)</p>
+<div class="directions-list">
+<div class="direction-step reveal"><div class="step-num">1</div><img alt="Step 1" class="step-photo" src="images/access/d_01.png"/><div class="step-body"><p class="step-text">Exit through the ticket gates and turn left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">2</div><img alt="Step 2" class="step-photo" src="images/access/d_02.png"/><div class="step-body"><p class="step-text">Take the stairs down to the South Exit.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">3</div><img alt="Step 3" class="step-photo" src="images/access/d_03.png"/><div class="step-body"><p class="step-text">Once outside, head diagonally to the left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">4</div><img alt="Step 4" class="step-photo" src="images/access/d_04.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">5</div><img alt="Step 5" class="step-photo" src="images/access/d_05.png"/><div class="step-body"><p class="step-text">When you reach the main road, turn left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">6</div><img alt="Step 6" class="step-photo" src="images/access/d_06.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">7</div><img alt="Step 7" class="step-photo" src="images/access/d_07.png"/><div class="step-body"><p class="step-text">Turn right and cross at the pedestrian crossing.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">8</div><img alt="Step 8" class="step-photo" src="images/access/d_08.png"/><div class="step-body"><p class="step-text">Turn right and continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">9</div><img alt="Step 9" class="step-photo" src="images/access/d_09.png"/><div class="step-body"><p class="step-text">Turn left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">10</div><img alt="Step 10" class="step-photo" src="images/access/d_10.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">11</div><img alt="Step 11" class="step-photo" src="images/access/d_11.png"/><div class="step-body"><p class="step-text">Head diagonally to the right.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">12</div><img alt="Step 12" class="step-photo" src="images/access/d_12.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">13</div><img alt="Step 13" class="step-photo" src="images/access/d_13.png"/><div class="step-body"><p class="step-text">Turn left and continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">14</div><img alt="Step 14" class="step-photo" src="images/access/d_14.png"/><div class="step-body"><p class="step-text">Continue straight along the road on the left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">15</div><img alt="Step 15" class="step-photo" src="images/access/d_15.png"/><div class="step-body"><p class="step-text">The cream-colored building next to the utility pole on the right is the church.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">16</div><img alt="Step 16" class="step-photo" src="images/access/d_16.png"/><div class="step-body"><p class="step-text">The exterior wall is designed in the image of "the blood of Jesus."</p></div></div>
+<div class="direction-step reveal"><div class="step-num">17</div><img alt="Step 17" class="step-photo-large" src="images/access/d_17.png"/><div class="step-body"><p class="step-text">You have arrived at the church!</p></div></div>
+</div>
+</div></section>
+</div>
+<!-- FOOTER -->
+<!-- EN SCHEDULE -->
+<div class="page" id="page-en-schedule">
+<div class="page-header"><h1>EVENTS</h1><p class="sub">Worship services, events and gatherings</p><div class="page-rule"></div></div>
+<section class="sec" style="background-color:#faf6f0"><div class="inner">
+<div class="reveal" style="text-align:center;margin-bottom:1.5rem">
+<p style="font-size:clamp(0.82rem,1.8vw,0.97rem);color:#5c3520;line-height:2">Check our latest events and gatherings.<br/>Feel free to contact us if you have any questions.</p>
+<div style="margin-top:1rem">
+</div>
+</div>
+<!-- Event Images (EN) -->
+<div class="event-flex-grid">
+<div class="event-flex-item" onclick="openLightbox(this.querySelector('img').src)"><img alt="Event" src="images/events/20260620.png" style="width:100%;display:block;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.08);cursor:zoom-in"/></div>
+<div class="event-flex-item">
+<img alt="Event" src="images/events/20260731.png" style="width:100%;display:block;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.08);cursor:zoom-in" onclick="openLightbox(this.src)"/>
+<div style="margin-top:0.6rem;font-size:clamp(0.78rem,1.5vw,0.92rem);line-height:2;color:#5c3520;padding:0.7rem 1rem;background-color:rgba(158,64,40,0.05);border-radius:6px;border-left:3px solid #9e4028">
+<span style="font-weight:600;display:block;margin-bottom:0.6rem">Michiru Hirose "Prayer" Piano Solo</span>
+<span style="display:block;margin-bottom:0.6rem">Reservation is required to attend. Please contact us at the details below.</span>
+<span style="display:block">Tel：<span id="tel-disp-schedule-en" style="color:#9e4028;cursor:pointer">080-4329-6712</span></span>
+<span style="display:block">Mail：<span id="mail-disp-schedule-en" style="color:#9e4028;cursor:pointer">orchrch2024@gmail.com</span></span>
+</div>
+</div>
+<div class="event-flex-item" onclick="openLightbox(this.querySelector('img').src)"><img alt="Event" src="images/events/20260801.png" style="width:100%;display:block;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.08);cursor:zoom-in"/></div>
+</div>
+<div class="reveal" style="max-width:1000px; margin:1.5rem auto 0; overflow:hidden; border-radius:8px; border:1px solid #ccc;">
+<div style="height: 516px; overflow: hidden; position: relative;">
+<iframe frameborder="0" height="600" scrolling="no" src="https://calendar.google.com/calendar/embed?src=cd835c462f14f55e67cf32087da1cf1d748cd83166491022b53fb0d985e545fb%40group.calendar.google.com&amp;ctz=Asia%2FTokyo&amp;color=%23ede0d0&amp;hl=ja&amp;showNav=0&amp;showTitle=0&amp;showTz=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;mode=AGENDA" style="border:0; position: absolute; top: -48px; left: 0;" width="100%">
+</iframe>
+</div>
+</div>
+</div></section>
+</div>
+<!-- Lightbox（全ページ共通） -->
+<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;align-items:center;justify-content:center;cursor:zoom-out;padding:1.5rem">
+<img id="lightbox-img" alt="" src="" style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:6px"/>
+<button onclick="closeLightbox()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1">✕</button>
+</div>
+<!-- FOOTER -->
+<footer id="site-footer" style="display:none">
+<div class="footer-top" id="footer-ja">
+<div class="footer-brand">
+<button class="footer-logo-btn" data-page="home">OR Church and Coffee</button>
+<p>教会とコーヒー豆焙煎のお店<br/>OR（オル）＝ ヘブル語で「光」</p>
+</div>
+<div class="footer-col">
+<h4>Pages</h4>
+<ul>
+<li><button class="footer-nav-btn" data-page="home">ホーム</button></li>
+<li><button class="footer-nav-btn" data-page="about">教会</button></li>
+<li><button class="footer-nav-btn" data-page="roasting">コーヒー</button></li>
+<li><button class="footer-nav-btn" data-page="access">アクセス</button></li>
+<li><button class="footer-nav-btn" data-page="schedule">イベント</button></li>
+<li><button class="footer-nav-btn lang-btn" data-page="en-home" style="color:#c49a5a">ENGLISH</button></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Contact</h4>
+<button class="contact-btn" id="tel-btn" style="font-size:0.95rem;color:#d4b89a">080-4329-6712</button>
+<button class="contact-btn" id="mail-btn" style="font-size:0.85rem;color:rgba(245,237,227,0.65)"></button>
+<p style="margin-top:0.6rem">東京都墨田区八広5−27−12<br/>京成電鉄押上線八広(やひろ)駅<br/>南口 徒歩5分</p>
+</div>
+</div>
+<div class="footer-top" id="footer-en" style="display:none">
+<div class="footer-brand">
+<button class="footer-logo-btn" data-page="en-home">OR Church and Coffee</button>
+<p>Church &amp; Coffee Roaster<br/>OR — "Light" in Hebrew</p>
+</div>
+<div class="footer-col">
+<h4>Pages</h4>
+<ul>
+<li><button class="footer-nav-btn" data-page="en-home">HOME</button></li>
+<li><button class="footer-nav-btn" data-page="en-church">CHURCH</button></li>
+<li><button class="footer-nav-btn" data-page="en-coffee">COFFEE</button></li>
+<li><button class="footer-nav-btn" data-page="en-access">ACCESS</button></li>
+<li><button class="footer-nav-btn" data-page="en-schedule">EVENTS</button></li>
+<li><button class="footer-nav-btn lang-btn" data-page="home" style="color:#c49a5a">日本語</button></li>
+</ul>
+</div>
+<div class="footer-col">
+<h4>Contact</h4>
+<button class="contact-btn" id="tel-btn-en" style="font-size:0.95rem;color:#d4b89a">080-4329-6712</button>
+<span id="en-mail-footer" style="display:block;font-size:0.85rem;color:rgba(245,237,227,0.65);margin-bottom:0.2rem;cursor:pointer"></span>
+<p style="margin-top:0.6rem">5-27-12 Yahiro, Sumida City, Tokyo<br/>4 min walk from Yahiro Station<br/>(South Exit), Keisei Oshiage Line</p>
+</div>
+</div>
+<div class="footer-bottom">© OR (オル) Church and Coffee  |  東京都墨田区八広5-27-12</div>
+</footer>
+<script>
+var currentLang = 'ja';
+var jaToEn = {'home':'en-home','about':'en-church','roasting':'en-coffee','access':'en-access','schedule':'en-schedule'};
+var enToJa = {};
+Object.keys(jaToEn).forEach(function(k){ enToJa[jaToEn[k]]=k; });
+
+function revealPage(name) {
+  setTimeout(function() {
+    var pg = document.getElementById('page-'+name);
+    if (!pg) return;
+    pg.querySelectorAll('.reveal').forEach(function(el){ el.classList.remove('visible'); });
+    var obs = new IntersectionObserver(function(entries,o) {
+      entries.forEach(function(e,i) {
+        if (e.isIntersecting) {
+          setTimeout(function(){ e.target.classList.add('visible'); }, i*80);
+          o.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.05});
+    pg.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+  }, 150);
+}
+
+function showPage(name) {
+  if (name.startsWith('en-')) { currentLang='en'; } else { currentLang='ja'; }
+
+  // 全ページ非表示
+  document.querySelectorAll('.page').forEach(function(p){ p.style.display='none'; });
+
+  // 対象ページ表示
+  var pg = document.getElementById('page-'+name);
+  if (pg) pg.style.display='block';
+
+  // en-scheduleページ表示時にカレンダーを初期化
+  if(name === 'en-schedule') {
+    setTimeout(function(){
+      var prevBtn = document.getElementById('cal-prev-en');
+      if(prevBtn && prevBtn._calInited) return;
+      if(prevBtn) prevBtn._calInited = true;
+      if(window.enCalFetch) window.enCalFetch();
+    }, 300);
+  }
+
+  // フッター制御
+  var f = document.getElementById('site-footer');
+  if (f) f.style.display = (name==='home'||name==='en-home') ? 'none' : 'block';
+  var fja = document.getElementById('footer-ja');
+  var fen = document.getElementById('footer-en');
+  if (fja) fja.style.display = currentLang==='en' ? 'none' : 'block';
+  if (fen) fen.style.display = currentLang==='en' ? 'block' : 'none';
+
+  // ナビアクティブ
+  document.querySelectorAll('.nav-btn:not(.lang-btn)').forEach(function(b) {
+    var bp = b.getAttribute('data-page');
+    var active = bp===name || (currentLang==='en' && jaToEn[bp]===name) || (currentLang==='ja' && enToJa[name]===bp);
+    b.classList.toggle('active', !!active);
+  });
+
+  // 言語ボタン更新
+  document.querySelectorAll('.lang-btn').forEach(function(lb) {
+    if (currentLang==='en') {
+      lb.textContent='日本語'; lb.setAttribute('data-page','home');
+    } else {
+      lb.textContent='ENGLISH'; lb.setAttribute('data-page','en-home');
+    }
+  });
+
+  // ナビボタンのテキスト更新（日本語/英語切り替え）
+  var navLabelsJa = {'home':'ホーム','about':'教会','roasting':'コーヒー','access':'アクセス','schedule':'イベント'};
+  var navLabelsEn = {'home':'HOME','about':'CHURCH','roasting':'COFFEE','access':'ACCESS','schedule':'EVENTS'};
+  document.querySelectorAll('.nav-btn:not(.lang-btn)').forEach(function(b) {
+    var bp = b.getAttribute('data-page');
+    if (currentLang==='en' && navLabelsEn[bp]) b.textContent = navLabelsEn[bp];
+    else if (currentLang==='ja' && navLabelsJa[bp]) b.textContent = navLabelsJa[bp];
+  });
+
+  window.scrollTo(0,0);
+  revealPage(name);
+}
+
+// クリックイベント
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('[data-page]');
+  if (!btn) return;
+  var page = btn.getAttribute('data-page');
+  if (currentLang==='en' && !page.startsWith('en-') && page!=='home') {
+    var ep = jaToEn[page];
+    if (ep && document.getElementById('page-'+ep)) { showPage(ep); return; }
+  }
+  showPage(page);
+});
+
+// 連絡先
+(function() {
+  var u='orchrch2024', d='gmail.com', mail=u+'@'+d;
+  ['mail-disp','en-mail-disp','mail-btn','en-mail-footer'].forEach(function(id) {
+    var el=document.getElementById(id);
+    if (el) { el.textContent=mail; el.style.cursor='pointer'; el.addEventListener('click',function(){ window.location.href='mailto:'+mail; }); }
+  });
+  ['mail-disp-schedule','mail-disp-schedule-en'].forEach(function(id) {
+    var el=document.getElementById(id);
+    if (el) { el.style.cursor='pointer'; el.addEventListener('click',function(){ window.location.href='mailto:'+mail; }); }
+  });
+  ['tel-disp','en-tel-disp','tel-btn','tel-btn-en','tel-disp-schedule','tel-disp-schedule-en'].forEach(function(id) {
+    var el=document.getElementById(id);
+    if (el) { el.style.cursor='pointer'; el.addEventListener('click',function(){ window.location.href='tel:080-4329-6712'; }); }
+  });
+})();
+
+// 初期表示
+showPage('home');
+
+function openLightbox(src) {
+  var lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+  document.getElementById('lightbox-img').src = '';
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+</body>
+</html>
