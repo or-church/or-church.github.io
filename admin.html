@@ -1,0 +1,716 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OR Church 管理画面</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+@font-face{font-family:'Roxborough CF';src:url('fonts/RoxboroughCF-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'JK Gothic';src:url('fonts/JKGothic-M.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font-size:15px;line-height:1.8}
+#login-wrap{height:100svh;display:flex;align-items:center;justify-content:center;background-color:#1a100a;background-image:linear-gradient(rgba(26,16,10,0.55),rgba(26,16,10,0.55)),url('images/admin/piano.png');background-size:cover;background-position:center 30%;background-repeat:no-repeat}
+.login-box{width:100%;max-width:600px;padding:2rem 2.5rem;text-align:center}
+.login-logo-area{margin-bottom:1.2rem}
+.login-site-name{font-family:'Roxborough CF','Cormorant Garamond',serif;font-style:normal;font-weight:400;font-size:clamp(2.8rem,8vw,4.5rem);line-height:1.08;letter-spacing:0.01em;display:block;text-align:center}
+.login-line1{display:block;color:#f5ede3;white-space:nowrap}
+.login-line2{display:block;color:#d4b89a;letter-spacing:0.03em;white-space:nowrap}
+.login-page-name{display:block;font-size:14px;letter-spacing:0.28em;color:rgba(245,237,227,0.75);margin-top:0.5rem;font-weight:400}
+.login-rule{width:40px;height:1px;background:#c49a5a;margin:1.4rem auto}
+.login-box input[type=password]{width:100%;max-width:380px;padding:11px 14px;border:0.5px solid rgba(196,154,90,0.6);border-radius:6px;font-size:14px;font-family:'Noto Sans JP',sans-serif;background:rgba(250,246,240,0.9);color:#2c1a0e;margin-bottom:0.8rem;outline:none;display:block;margin-left:auto;margin-right:auto}
+.login-box input[type=password]:focus{border-color:#9e4028;background:#faf6f0}
+.login-box button{width:100%;max-width:380px;padding:11px;background:#9e4028;color:#fff;border:none;border-radius:6px;font-size:14px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;letter-spacing:0.05em;display:block;margin-left:auto;margin-right:auto}
+.login-box button:hover{background:#7a3020}
+.login-err{font-size:12px;color:#c0392b;margin-top:0.5rem;display:none}
+#admin-wrap{min-height:100svh;display:none}
+.admin-header{background:linear-gradient(to bottom,#f5ede3,#ede0d0);border-bottom:1px solid rgba(196,154,90,0.4);padding:0.9rem 1.6rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(44,26,14,0.08)}
+.admin-header-logo{display:flex;align-items:baseline;gap:0.8rem;flex-wrap:wrap}
+.oru-gothic{font-family:'JK Gothic','Noto Sans JP',sans-serif;font-style:normal;font-weight:400;font-size:0.65em;display:inline-block;vertical-align:0.175em;line-height:1}
+.admin-site-name{font-family:'Roxborough CF','Cormorant Garamond',serif;font-style:normal;font-weight:400;font-size:1.4rem;color:#9e4028;line-height:1}
+.admin-page-name{font-size:0.68rem;letter-spacing:0.22em;color:#8b5a3a;padding-left:0.7rem;border-left:1px solid rgba(196,154,90,0.5)}
+.admin-logout{background:none;border:0.5px solid rgba(158,64,40,0.35);color:#9e4028;padding:5px 14px;border-radius:5px;font-size:12px;font-family:'Noto Sans JP',sans-serif;cursor:pointer}
+.admin-logout:hover{background:rgba(158,64,40,0.06)}
+.admin-main{max-width:860px;margin:0 auto;padding:1.4rem 1.2rem}
+.admin-section{background:#faf6f0;border-radius:8px;padding:1.5rem;margin-bottom:1.4rem;box-shadow:0 2px 12px rgba(44,26,14,0.07);border:0.5px solid rgba(196,154,90,0.2)}
+.admin-section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid #ede0d0;flex-wrap:wrap;gap:8px}
+.admin-section-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:#5c3520}
+.admin-notice-preview{font-size:13px;color:#5c3520;padding:0.6rem 1rem;background:rgba(158,64,40,0.05);border-left:3px solid #9e4028;border-radius:0 4px 4px 0;margin-bottom:0.8rem;min-height:2rem}
+.admin-notice-none{color:#8b5a3a;font-style:italic}
+.maint-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid rgba(196,154,90,0.22)}
+.maint-row:last-child{border-bottom:none}
+.maint-row-label{font-size:13px;font-weight:500;color:#5c3520;flex:1}
+.maint-row-sub{font-size:11px;color:#8b5a3a;margin-top:1px}
+.maint-btns-right{display:flex;gap:6px;flex-wrap:wrap}
+.maint-btn-new{background:#9e4028;color:#fff;border:none;border-radius:5px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;white-space:nowrap}
+.maint-btn-new:hover{background:#7a3020}
+.maint-btn-edit{background:none;border:0.5px solid #9e4028;color:#9e4028;border-radius:5px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;white-space:nowrap}
+.maint-btn-edit:hover{background:rgba(158,64,40,0.08)}
+.maint-btn-del{background:none;border:0.5px solid #c0392b;color:#c0392b;border-radius:5px;padding:5px 14px;font-size:12px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;white-space:nowrap}
+.maint-btn-del:hover{background:rgba(192,57,43,0.08)}
+.maint-event-name{font-size:13px;color:#5c3520;padding:2px 8px;background:rgba(196,154,90,0.1);border-radius:4px}
+.past-badge{font-size:10px;color:#8b5a3a;background:#ede0d0;border-radius:3px;padding:1px 6px;margin-left:6px}
+.maint-overlay{display:none;position:fixed;inset:0;background:rgba(44,26,14,0.32);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:500;align-items:flex-start;justify-content:center;padding:1.5rem 1rem 1rem;overflow-y:auto}
+.maint-overlay.open{display:flex}
+.maint-modal{background:#faf6f0;border-radius:10px;width:100%;max-width:780px;padding:1.2rem;position:relative;border:0.5px solid rgba(196,154,90,0.35);box-shadow:0 8px 40px rgba(44,26,14,0.15)}
+.maint-modal-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:500;color:#5c3520;margin-bottom:0.7rem;padding-bottom:0.5rem;border-bottom:1.5px solid rgba(196,154,90,0.5)}
+.maint-close-btn{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.5rem;color:#8b5a3a;cursor:pointer;line-height:1}
+.mf-field{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.mf-label{font-size:12px;color:#5c3520;font-weight:500;letter-spacing:0.03em}
+.mf-label .req{color:#9e4028;margin-left:2px}
+.mf-input,.mf-select,.mf-textarea{padding:6px 10px;border:0.5px solid rgba(196,154,90,0.6);border-radius:6px;font-size:13px;background:#faf6f0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;transition:border-color 0.15s;outline:none;width:100%}
+.mf-input:focus,.mf-select:focus,.mf-textarea:focus{border-color:#9e4028}
+.mf-textarea{height:76px;resize:vertical}
+.mf-textarea[readonly]{background:#f5f0ea;color:#5c3520;cursor:not-allowed}
+.mf-err{font-size:11px;color:#c0392b;display:none;margin-top:2px}
+.mf-field.has-err .mf-err{display:block}
+.mf-field.has-err .mf-input,.mf-field.has-err .mf-select,.mf-field.has-err .mf-textarea{border-color:#c0392b}
+.mf-char-warn{font-size:11px;color:#c0392b;display:none;margin-top:2px}
+.mf-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mf-section-label{font-size:11px;letter-spacing:0.1em;color:#9e4028;font-weight:500;margin:0.5rem 0 0.3rem;border-bottom:1px solid rgba(196,154,90,0.35);padding-bottom:4px;background:rgba(196,154,90,0.06);padding:3px 6px 4px}
+.mf-footer{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-top:0.3rem;border-top:0.5px solid rgba(196,154,90,0.3);padding-top:0.5rem}.mf-footer-btns{display:flex;gap:8px;flex-shrink:0}.mf-delete-inline{margin:0;padding:0.4rem 0.7rem;background:rgba(192,57,43,0.04);border-radius:6px;border:0.5px solid rgba(192,57,43,0.2);flex:1;min-width:0;max-width:75%}.mf-delete-inline p{font-size:11px;color:#8b5a3a;margin-bottom:0.3rem}
+.mf-btn-cancel{background:none;border:0.5px solid #c49a5a;border-radius:6px;padding:6px 16px;font-size:13px;color:#5c3520;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
+.mf-btn-save{background:#9e4028;border:none;border-radius:6px;padding:6px 20px;font-size:13px;color:#fff;cursor:pointer;font-family:'Noto Sans JP',sans-serif;font-weight:500}
+.mf-btn-save:hover{background:#7a3020}
+.mf-delete-zone{margin-top:0.6rem;padding:0.6rem;background:rgba(192,57,43,0.04);border-radius:6px;border:0.5px solid rgba(192,57,43,0.2)}
+.mf-delete-zone p{font-size:12px;color:#8b5a3a;margin-bottom:0.4rem}
+.mf-img-drop{border:2px dashed #c49a5a;border-radius:8px;padding:0.8rem 1rem;text-align:center;cursor:pointer;transition:background 0.15s;font-size:13px;color:#8b5a3a;background:#faf6f0}
+.mf-img-drop.dragover{background:rgba(196,154,90,0.1)}
+.mf-img-preview{width:100%;max-height:200px;object-fit:contain;border-radius:6px;display:none}
+.translating{opacity:0.6;font-style:italic}
+@media(max-width:540px){.mf-grid2{grid-template-columns:1fr}.admin-main{padding:1rem 0.8rem}}
+</style>
+</head>
+<body>
+
+<div id="login-wrap">
+  <div class="login-box">
+    <div class="login-logo-area">
+      <span class="login-site-name"><span class="login-line1">OR Church</span><span class="login-line2">and Coffee</span></span>
+      <span class="login-page-name">管理画面</span>
+    </div>
+    <div class="login-rule"></div>
+    <input type="password" id="maint-pw" placeholder="パスワードを入力" onkeydown="if(event.key==='Enter')maintLogin()"/>
+    <button onclick="maintLogin()">ログイン</button>
+    <div class="login-err" id="maint-err">パスワードが違います</div>
+  </div>
+</div>
+
+<div id="admin-wrap">
+  <header class="admin-header">
+    <div class="admin-header-logo">
+      <span class="admin-site-name">OR <span class="oru-gothic">(オル)</span> Church and Coffee</span>
+      <span class="admin-page-name">管理画面</span>
+    </div>
+    <button class="admin-logout" onclick="logout()">ログアウト</button>
+  </header>
+  <main class="admin-main">
+    <div class="admin-section">
+      <div class="admin-section-hd">
+        <div class="admin-section-title">📢 お知らせ</div>
+        <div style="display:flex;gap:6px">
+          <button class="maint-btn-new" onclick="openForm('notice-new')">新規</button>
+          <button class="maint-btn-edit" onclick="openForm('notice-edit')">編集</button>
+        </div>
+      </div>
+      <div class="admin-notice-preview" id="notice-current"><span class="admin-notice-none">（読み込み中...）</span></div>
+    </div>
+    <div class="admin-section">
+      <div class="admin-section-hd">
+        <div class="admin-section-title">📅 イベント</div>
+        <button class="maint-btn-new" onclick="openForm('event-new')">新規</button>
+      </div>
+      <div id="maint-event-list"><span style="font-size:13px;color:#8b5a3a">読み込み中...</span></div>
+    </div>
+  </main>
+</div>
+
+<div class="maint-overlay" id="maint-notice-new">
+  <div class="maint-modal">
+    <button class="maint-close-btn" onclick="closeSubForm('notice-new')">✕</button>
+    <div class="maint-modal-title">お知らせ 新規入力</div>
+    <div class="mf-section-label">日本語</div>
+    <div class="mf-field" id="fn-ja-wrap">
+      <label class="mf-label">本文<span class="req">*</span></label>
+      <textarea class="mf-textarea" id="fn-ja" placeholder="お知らせ本文を入力してください" oninput="scheduleTranslate('notice')"></textarea>
+      <span class="mf-err">本文を入力してください</span>
+    </div>
+    <div class="mf-section-label">English（自動翻訳）</div>
+    <div class="mf-field">
+      <label class="mf-label">Translation</label>
+      <textarea class="mf-textarea" id="fn-en" readonly placeholder="日本語を入力すると自動翻訳されます"></textarea>
+    </div>
+    <div class="mf-footer">
+      <button class="mf-btn-cancel" onclick="closeSubForm('notice-new')">キャンセル</button>
+      <button class="mf-btn-save" onclick="saveNotice('new')">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="maint-overlay" id="maint-notice-edit">
+  <div class="maint-modal">
+    <button class="maint-close-btn" onclick="closeSubForm('notice-edit')">✕</button>
+    <div class="maint-modal-title">お知らせ 編集</div>
+    <div class="mf-section-label">日本語</div>
+    <div class="mf-field" id="fe-ja-wrap">
+      <label class="mf-label">本文<span class="req">*</span></label>
+      <textarea class="mf-textarea" id="fe-ja" oninput="scheduleTranslate('notice-edit')"></textarea>
+      <span class="mf-err">本文を入力してください</span>
+    </div>
+    <div class="mf-section-label">English（自動翻訳）</div>
+    <div class="mf-field">
+      <label class="mf-label">Translation</label>
+      <textarea class="mf-textarea" id="fe-en" readonly></textarea>
+    </div>
+    <div class="mf-footer" style="margin-top:5px;border-top:none;padding-top:0">
+      <div class="mf-delete-inline">
+        <p>お知らせを削除すると表示が消えます。</p>
+        <button class="maint-btn-del" onclick="deleteNotice()">お知らせを削除する</button>
+      </div>
+      <div class="mf-footer-btns">
+        <button class="mf-btn-cancel" onclick="closeSubForm('notice-edit')">キャンセル</button>
+        <button class="mf-btn-save" onclick="saveNotice('edit')">更新</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="maint-overlay" id="maint-event-new">
+  <div class="maint-modal" style="max-width:820px">
+    <button class="maint-close-btn" onclick="closeSubForm('event-new')">✕</button>
+    <div class="maint-modal-title">イベント 新規入力</div>
+    <div class="mf-field" id="fev-name-wrap">
+      <label class="mf-label">イベント名<span class="req">*</span>（全角25文字／半角50文字以内）</label>
+      <input type="text" class="mf-input" id="fev-name" placeholder="例：日曜礼拝" oninput="checkEventNameLen('fev-name','fev-name-warn')"/>
+      <span class="mf-char-warn" id="fev-name-warn">文字数が超過しています</span>
+      <span class="mf-err">イベント名を入力してください</span>
+    </div>
+    <div class="mf-grid2">
+      <div class="mf-field" id="fev-start-wrap">
+        <label class="mf-label">開始日<span class="req">*</span></label>
+        <input type="date" class="mf-input" id="fev-start" onchange="onFevStartChange()"/>
+        <span class="mf-err">開始日を入力してください</span>
+      </div>
+      <div class="mf-field" id="fev-end-wrap">
+        <label class="mf-label">終了日<span class="req">*</span></label>
+        <input type="date" class="mf-input" id="fev-end" onchange="onFevEndChange()"/>
+        <span class="mf-err">終了日を入力してください</span>
+      </div>
+    </div>
+    <div id="fev-time-group" class="mf-grid2">
+      <div class="mf-field" id="fev-stime-wrap">
+        <label class="mf-label">開始時間<span class="req">*</span></label>
+        <input type="time" class="mf-input" id="fev-stime"/>
+        <span class="mf-err">開始時間を入力してください</span>
+      </div>
+      <div class="mf-field" id="fev-etime-wrap">
+        <label class="mf-label">終了時間<span class="req">*</span></label>
+        <input type="time" class="mf-input" id="fev-etime"/>
+        <span class="mf-err">終了時間を入力してください</span>
+      </div>
+    </div>
+    <div class="mf-field" id="fev-reserve-wrap">
+      <label class="mf-label">予約<span class="req">*</span></label>
+      <select class="mf-select" id="fev-reserve">
+        <option value="">選択してください</option>
+        <option value="required">要予約</option>
+        <option value="free" selected>予約不要</option>
+      </select>
+      <span class="mf-err">予約の要否を選択してください</span>
+    </div>
+    <div class="mf-section-label">画像（任意）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+      <div class="mf-img-drop" id="fev-drop" onclick="document.getElementById('fev-file').click()" ondragover="evtDragover(event,'fev-drop')" ondragleave="evtDragleave('fev-drop')" ondrop="evtDrop(event,'fev-file','fev-img-preview','new')" style="height:160px;display:flex;align-items:center;justify-content:center">クリックまたは<br/>ドラッグ＆ドロップ<br/>で画像を選択</div>
+      <img id="fev-img-preview" class="mf-img-preview" alt="プレビュー" style="display:none;width:100%;max-height:148px;object-fit:contain;border-radius:6px;margin:6px 0"/>
+    </div>
+    <input type="file" id="fev-file" accept="image/*" style="display:none" onchange="handleImgFile(this,'fev-img-preview','new')"/>
+    <div class="mf-footer">
+      <button class="mf-btn-cancel" onclick="closeSubForm('event-new')">キャンセル</button>
+      <button class="mf-btn-save" onclick="saveEvent('new')">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="maint-overlay" id="maint-event-edit">
+  <div class="maint-modal" style="max-width:820px">
+    <button class="maint-close-btn" onclick="closeSubForm('event-edit')">✕</button>
+    <div class="maint-modal-title">イベント 編集</div>
+    <div class="mf-field" id="fee-name-wrap">
+      <label class="mf-label">イベント名<span class="req">*</span>（全角25文字／半角50文字以内）</label>
+      <input type="text" class="mf-input" id="fee-name" oninput="checkEventNameLen('fee-name','fee-name-warn')"/>
+      <span class="mf-char-warn" id="fee-name-warn">文字数が超過しています</span>
+      <span class="mf-err">イベント名を入力してください</span>
+    </div>
+    <div class="mf-grid2" style="row-gap:0">
+      <div class="mf-field" id="fee-start-wrap">
+        <label class="mf-label">開始日<span class="req">*</span></label>
+        <input type="date" class="mf-input" id="fee-start" onchange="onFeeStartChange()"/>
+        <span class="mf-err">開始日を入力してください</span>
+      </div>
+      <div class="mf-field" id="fee-end-wrap">
+        <label class="mf-label">終了日<span class="req">*</span></label>
+        <input type="date" class="mf-input" id="fee-end" onchange="onFeeEndChange()"/>
+        <span class="mf-err">終了日を入力してください</span>
+      </div>
+      <div class="mf-field" id="fee-stime-wrap">
+        <label class="mf-label">開始時間<span class="req">*</span></label>
+        <input type="time" class="mf-input" id="fee-stime"/>
+        <span class="mf-err">開始時間を入力してください</span>
+      </div>
+      <div class="mf-field" id="fee-etime-wrap">
+        <label class="mf-label">終了時間<span class="req">*</span></label>
+        <input type="time" class="mf-input" id="fee-etime"/>
+        <span class="mf-err">終了時間を入力してください</span>
+      </div>
+    </div>
+    <div class="mf-field" id="fee-reserve-wrap">
+      <label class="mf-label">予約<span class="req">*</span></label>
+      <select class="mf-select" id="fee-reserve">
+        <option value="">選択してください</option>
+        <option value="required">要予約</option>
+        <option value="free">予約不要</option>
+      </select>
+      <span class="mf-err">予約の要否を選択してください</span>
+    </div>
+    <div class="mf-section-label">画像</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+      <div class="mf-img-drop" id="fee-drop" onclick="document.getElementById('fee-file').click()" ondragover="evtDragover(event,'fee-drop')" ondragleave="evtDragleave('fee-drop')" ondrop="evtDrop(event,'fee-file','fee-img-preview','edit')" style="height:160px;display:flex;align-items:center;justify-content:center">クリックまたは<br/>ドラッグ＆ドロップ<br/>で画像を変更（省略可）</div>
+      <img id="fee-img-preview" class="mf-img-preview" alt="プレビュー" style="display:none;width:100%;max-height:148px;object-fit:contain;border-radius:6px;margin:6px 0"/>
+    </div>
+    <input type="file" id="fee-file" accept="image/*" style="display:none" onchange="handleImgFile(this,'fee-img-preview','edit')"/>
+    <div class="mf-footer" style="margin-top:5px;border-top:none;padding-top:0">
+      <div class="mf-delete-inline">
+        <p>このイベントを削除します。削除後は元に戻せません。</p>
+        <button class="maint-btn-del" onclick="deleteEvent()">イベントを削除する</button>
+      </div>
+      <div class="mf-footer-btns">
+        <button class="mf-btn-cancel" onclick="closeSubForm('event-edit')">キャンセル</button>
+        <button class="mf-btn-save" onclick="saveEvent('edit')">更新</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="lightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:1000;align-items:center;justify-content:center;cursor:zoom-out;padding:1.5rem">
+  <img id="lightbox-img" alt="" src="" style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:6px"/>
+  <button onclick="closeLightbox()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1">✕</button>
+</div>
+
+<script>
+var WORKER_URL='https://or-church-api.ukonmai.workers.dev';
+var GITHUB_PAGES_BASE='https://or-church.github.io';
+var eventsData=[];
+var noticeData={ja:'',en:''};
+var editingEventId=null;
+var pendingImgData=null;
+var pendingImgFilename=null;
+var isTranslating=false;
+var translateTimer=null;
+
+async function sha256(str){
+  var buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+async function maintLogin(){
+  var pw=document.getElementById('maint-pw').value;
+  var hash=await sha256(pw);
+  var correct=await sha256('stefano719');
+  if(hash===correct){
+    document.getElementById('maint-err').style.display='none';
+    document.getElementById('maint-pw').value='';
+    document.getElementById('login-wrap').style.display='none';
+    document.getElementById('admin-wrap').style.display='block';
+    loadEventsFromGitHub();
+  }else{
+    document.getElementById('maint-err').style.display='block';
+  }
+}
+function logout(){
+  if(!confirm('ログアウトしますか？'))return;
+  document.getElementById('admin-wrap').style.display='none';
+  document.getElementById('login-wrap').style.display='flex';
+  eventsData=[];noticeData={ja:'',en:''};
+}
+
+async function githubUpdate(path,content,message){
+  var res=await fetch(WORKER_URL+'/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'update',path:path,content:content,message:message})});
+  return res.json();
+}
+async function githubDeleteFile(path,message){
+  try{
+    var res=await fetch(WORKER_URL+'/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'delete',path:path,message:message||'delete file'})});
+    return res.json();
+  }catch(e){console.log('delete error',e);}
+}
+async function githubUpdateBinary(path,base64Content,message){
+  var res=await fetch(WORKER_URL+'/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'update-binary',path:path,content:base64Content,message:message})});
+  return res.json();
+}
+async function getIndexHtml(){
+  var res=await fetch(WORKER_URL+'/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get',path:'index.html'})});
+  var data=await res.json();
+  if(data.content){return atob(data.content.replace(/\n/g,''));}
+  return null;
+}
+
+async function loadEventsFromGitHub(){
+  try{
+    var res=await fetch(WORKER_URL+'/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get',path:'data/events.json'})});
+    var data=await res.json();
+    if(data.content){
+      var base64=data.content.replace(/\n/g,'');
+      var binary=atob(base64);
+      var bytes=new Uint8Array(binary.length);
+      for(var i=0;i<binary.length;i++){bytes[i]=binary.charCodeAt(i);}
+      var decoded=new TextDecoder('utf-8').decode(bytes);
+      var json=JSON.parse(decoded);
+      if(Array.isArray(json))eventsData=json;
+    }
+  }catch(e){console.log('events.json load error',e);}
+  renderMaintEventList();
+  await loadNoticeFromGitHub();
+}
+async function loadNoticeFromGitHub(){
+  try{
+    var res=await fetch(WORKER_URL+'/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get',path:'data/notices.json'})});
+    var data=await res.json();
+    if(data.content){
+      var base64=data.content.replace(/\n/g,'');
+      var binary=atob(base64);
+      var bytes=new Uint8Array(binary.length);
+      for(var i=0;i<binary.length;i++){bytes[i]=binary.charCodeAt(i);}
+      var decoded=new TextDecoder('utf-8').decode(bytes);
+      var json=JSON.parse(decoded);
+      noticeData.ja=json.ja||'';
+      noticeData.en=json.en||'';
+    }
+  }catch(e){console.log('notices.json load error',e);}
+  updateNoticePreview();
+}
+async function saveEventsToGitHub(){
+  var sorted=eventsData.slice().sort(function(a,b){var ka=a.start+a.stime,kb=b.start+b.stime;return ka<kb?-1:ka>kb?1:0;});
+  await githubUpdate('data/events.json',JSON.stringify(sorted,null,2),'update events');
+}
+
+function updateNoticePreview(){
+  var el=document.getElementById('notice-current');
+  if(!el)return;
+  if(noticeData.ja){el.innerHTML=noticeData.ja;el.style.fontStyle='normal';}
+  else{el.innerHTML='<span class="admin-notice-none">（お知らせなし）</span>';}
+}
+
+async function saveNotice(mode){
+  if(isTranslating){alert('翻訳中です。しばらくお待ちください。');return;}
+  var jaId=mode==='new'?'fn-ja':'fe-ja';
+  var enId=mode==='new'?'fn-en':'fe-en';
+  var wrapId=mode==='new'?'fn-ja-wrap':'fe-ja-wrap';
+  var ja=document.getElementById(jaId).value.trim();
+  var en=document.getElementById(enId).value.trim();
+  var wrap=document.getElementById(wrapId);
+  if(!ja){wrap.classList.add('has-err');return;}
+  wrap.classList.remove('has-err');
+  noticeData={ja:ja,en:en};
+  updateNoticePreview();
+  try{
+    await githubUpdate('data/notices.json',JSON.stringify({ja:ja,en:en}),'update notice');
+  }catch(e){console.error(e);}
+  closeSubForm(mode==='new'?'notice-new':'notice-edit');
+  showSaveMessage('✅ お知らせを保存しました。');
+}
+async function deleteNotice(){
+  if(!confirm('お知らせを削除しますか？'))return;
+  noticeData={ja:'',en:''};
+  updateNoticePreview();
+  try{
+    await githubUpdate('data/notices.json',JSON.stringify({ja:'',en:''}),'delete notice');
+  }catch(e){console.error(e);}
+  closeSubForm('notice-edit');
+  showSaveMessage('✅ お知らせを削除しました。');
+}
+
+function closeSubForm(type){document.getElementById('maint-'+type).classList.remove('open');}
+function openForm(type){
+  if(type==='notice-new'){
+    document.getElementById('fn-ja').value='';document.getElementById('fn-en').value='';
+    document.getElementById('fn-ja-wrap').classList.remove('has-err');
+    document.getElementById('maint-notice-new').classList.add('open');
+  }else if(type==='notice-edit'){
+    document.getElementById('fe-ja').value=noticeData.ja||'';
+    document.getElementById('fe-en').value=noticeData.en||'';
+    document.getElementById('fe-ja-wrap').classList.remove('has-err');
+    document.getElementById('maint-notice-edit').classList.add('open');
+  }else if(type==='event-new'){
+    var now=new Date();var today=now.toISOString().slice(0,10);
+    var sh=now.getHours()+1;var stime=String(sh<24?sh:23).padStart(2,'0')+':00';
+    var eh=sh+2;var etime=String(eh<24?eh:23).padStart(2,'0')+':00';
+    document.getElementById('fev-name').value='';
+    document.getElementById('fev-start').value=today;document.getElementById('fev-end').value=today;
+    document.getElementById('fev-stime').value=stime;document.getElementById('fev-etime').value=etime;
+    document.getElementById('fev-reserve').value='free';
+    document.getElementById('fev-img-preview').style.display='none';document.getElementById('fev-img-preview').src='';
+    pendingImgData=null;pendingImgFilename=null;
+    ['fev-name-wrap','fev-start-wrap','fev-end-wrap','fev-stime-wrap','fev-etime-wrap','fev-reserve-wrap'].forEach(function(id){document.getElementById(id).classList.remove('has-err');});
+    document.getElementById('fev-name-warn').style.display='none';
+    var tg=document.getElementById('fev-time-group');if(tg)tg.style.display='grid';
+    document.getElementById('maint-event-new').classList.add('open');
+  }
+}
+function openEventEdit(id){
+  var ev=eventsData.find(function(e){return e.id===id;});if(!ev)return;
+  editingEventId=id;
+  document.getElementById('fee-name').value=ev.name;
+  document.getElementById('fee-start').value=ev.start;document.getElementById('fee-end').value=ev.end;
+  document.getElementById('fee-stime').value=ev.stime||'';document.getElementById('fee-etime').value=ev.etime||'';
+  document.getElementById('fee-reserve').value=ev.reserve;
+  var prev=document.getElementById('fee-img-preview');
+  if(ev.img){prev.src=ev.img;prev.style.display='block';prev.onerror=function(){prev.style.display='none';};}
+  else{prev.src='';prev.style.display='none';}
+  pendingImgData=null;pendingImgFilename=null;
+  ['fee-name-wrap','fee-start-wrap','fee-end-wrap','fee-stime-wrap','fee-etime-wrap','fee-reserve-wrap'].forEach(function(id){document.getElementById(id).classList.remove('has-err');});
+  document.getElementById('fee-name-warn').style.display='none';
+  document.getElementById('maint-event-edit').classList.add('open');
+}
+function renderMaintEventList(){
+  var today=new Date();today.setHours(0,0,0,0);
+  var sorted=eventsData.slice().sort(function(a,b){var ka=a.start+a.stime,kb=b.start+b.stime;return ka<kb?-1:ka>kb?1:0;});
+  var html='';
+  sorted.forEach(function(ev){
+    var ed=new Date(ev.end||ev.start);ed.setHours(0,0,0,0);
+    var isPast=ed<today;
+    var pastBadge=isPast?'<span class="past-badge">終了</span>':'';
+    html+='<div class="maint-row">'
+      +'<div><div class="maint-row-label"><span class="maint-event-name">'+ev.name+'</span>'+pastBadge+'</div>'
+      +'<div class="maint-row-sub">'+ev.start+(ev.start!==ev.end?' 〜 '+ev.end:'')+(ev.stime?' '+ev.stime:'')+'</div></div>'
+      +'<div class="maint-btns-right"><button class="maint-btn-edit" onclick="openEventEdit(\''+ev.id+'\')">編集</button></div>'
+      +'</div>';
+  });
+  document.getElementById('maint-event-list').innerHTML=html||'<span style="font-size:13px;color:#8b5a3a">登録イベントなし</span>';
+}
+
+function checkEventNameLen(inputId,warnId){
+  var val=document.getElementById(inputId).value;var len=0;
+  for(var i=0;i<val.length;i++){len+=val.charCodeAt(i)>127?2:1;}
+  document.getElementById(warnId).style.display=len>50?'block':'none';
+}
+
+function scheduleTranslate(type){clearTimeout(translateTimer);translateTimer=setTimeout(function(){doTranslate(type);},800);}
+async function doTranslate(type){
+  var srcId=type==='notice'?'fn-ja':'fe-ja';
+  var dstId=type==='notice'?'fn-en':'fe-en';
+  var text=document.getElementById(srcId).value.trim();
+  if(!text){document.getElementById(dstId).value='';return;}
+  var dst=document.getElementById(dstId);
+  dst.value='翻訳中...';isTranslating=true;
+  try{
+    var res=await fetch(WORKER_URL+'/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text})});
+    var data=await res.json();
+    dst.value=data.translated||'';
+  }catch(e){dst.value='（翻訳エラー）';}
+  isTranslating=false;
+}
+
+function evtDragover(e,dropId){e.preventDefault();document.getElementById(dropId).classList.add('dragover');}
+function evtDragleave(dropId){document.getElementById(dropId).classList.remove('dragover');}
+function evtDrop(e,fileId,previewId,mode){e.preventDefault();evtDragleave(fileId.replace('file','drop'));var f=e.dataTransfer.files[0];if(f)processImgFile(f,previewId,mode);}
+function handleImgFile(input,previewId,mode){if(input.files[0])processImgFile(input.files[0],previewId,mode);}
+function processImgFile(file,previewId,mode){
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var w=img.width,h=img.height;
+      if(w>1024||h>1024){var ratio=Math.min(1024/w,1024/h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
+      var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      var dataUrl=canvas.toDataURL('image/png');
+      pendingImgData=dataUrl;
+      var prev=document.getElementById(previewId);prev.onerror=null;prev.src=dataUrl;prev.style.display='block';
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function buildEventId(start,stime,isMultiDay){
+  if(isMultiDay)return start.replace(/-/g,'')+'0000';
+  return start.replace(/-/g,'')+stime.replace(':','');
+}
+function buildImgFilename(start,stime,isMultiDay){
+  return buildEventId(start,stime,isMultiDay)+'_'+Date.now()+'.png';
+}
+
+function onFevStartChange(){
+  var start=document.getElementById('fev-start').value;
+  var end=document.getElementById('fev-end').value;
+  if(!end||end<start){document.getElementById('fev-end').value=start;}
+  updateFevTimeGroupVisibility();
+}
+function onFevEndChange(){
+  var start=document.getElementById('fev-start').value;
+  var end=document.getElementById('fev-end').value;
+  if(start&&end&&end<start){alert('終了日は開始日以降の日付を指定してください。');document.getElementById('fev-end').value=start;}
+  updateFevTimeGroupVisibility();
+}
+function updateFevTimeGroupVisibility(){
+  var start=document.getElementById('fev-start').value;
+  var end=document.getElementById('fev-end').value;
+  var tg=document.getElementById('fev-time-group');
+  if(tg){tg.style.display=(start&&end&&end>start)?'none':'grid';}
+}
+function onFeeStartChange(){
+  var start=document.getElementById('fee-start').value;
+  var end=document.getElementById('fee-end').value;
+  if(start&&end&&end<start){document.getElementById('fee-end').value=start;document.getElementById('fee-end-wrap').classList.remove('has-err');}
+}
+function onFeeEndChange(){
+  var start=document.getElementById('fee-start').value;
+  var end=document.getElementById('fee-end').value;
+  if(start&&end&&end<start){alert('終了日は開始日以降の日付を指定してください。');document.getElementById('fee-end').value=start;document.getElementById('fee-end-wrap').classList.remove('has-err');}
+}
+
+async function saveEvent(mode){
+  var pfx=mode==='new'?'fev':'fee';
+  var name=document.getElementById(pfx+'-name').value.trim();
+  var start=document.getElementById(pfx+'-start').value;
+  var end=document.getElementById(pfx+'-end').value;
+  var stime=document.getElementById(pfx+'-stime').value;
+  var etime=document.getElementById(pfx+'-etime').value;
+  var reserve=document.getElementById(pfx+'-reserve').value;
+  var isMultiDay=start&&end&&end>start;
+  var ok=true;
+  var checks={name:name,start:start,end:end,reserve:reserve};
+  if(!isMultiDay){checks.stime=stime;checks.etime=etime;}
+  Object.keys(checks).forEach(function(k){
+    var wrap=document.getElementById(pfx+'-'+k+'-wrap');
+    if(!checks[k]){wrap.classList.add('has-err');ok=false;}else{wrap.classList.remove('has-err');}
+  });
+  if(!ok)return;
+  if(start&&end&&end<start){alert('終了日は開始日以降の日付を指定してください。');document.getElementById(pfx+'-end-wrap').classList.add('has-err');return;}
+  if(!isMultiDay&&stime&&etime&&etime<=stime){alert('終了時間は開始時間より後の時間を指定してください。');return;}
+  var len=0;for(var i=0;i<name.length;i++){len+=name.charCodeAt(i)>127?2:1;}
+  if(len>50){document.getElementById(pfx+'-name-warn').style.display='block';return;}
+  var eventId=buildEventId(start,stime,isMultiDay);var imgFilename=pendingImgData?buildImgFilename(start,stime,isMultiDay):null;
+  var imgRelPath=imgFilename?('images/events/'+imgFilename):null;
+  var imgAbsUrl=imgRelPath?(GITHUB_PAGES_BASE+'/'+imgRelPath+'?t='+Date.now()):'';
+  var oldImgRelPath=null;var idx=-1;
+  if(mode==='new'){
+    eventsData.push({id:eventId,name:name,start:start,end:end,stime:isMultiDay?'':stime,etime:isMultiDay?'':etime,reserve:reserve,img:imgAbsUrl});
+  }else{
+    idx=eventsData.findIndex(function(e){return e.id===editingEventId;});
+    if(idx>=0){
+      var oldImg=eventsData[idx].img||'';
+      if(pendingImgData&&oldImg){var oldFilename=oldImg.split('/').pop().split('?')[0];oldImgRelPath='images/events/'+oldFilename;}
+      eventsData[idx]={id:eventId,name:name,start:start,end:end,stime:isMultiDay?'':stime,etime:isMultiDay?'':etime,reserve:reserve,img:pendingImgData?imgAbsUrl:(eventsData[idx].img||'')};
+    }
+  }
+  var savedImgDataUrl=pendingImgData;
+  setSaveBtnState(mode,true);
+  if(savedImgDataUrl)clearMaintProgress();
+  try{
+    if(pendingImgData&&imgRelPath){
+      showMaintProgress('画像をアップロード中...','working');
+      var base64=pendingImgData.split(',')[1];
+      await githubUpdateBinary(imgRelPath,base64,'upload event image');
+      if(oldImgRelPath){await githubDeleteFile(oldImgRelPath,'delete old event image');}
+      if(idx>=0){eventsData[idx].img=GITHUB_PAGES_BASE+'/'+imgRelPath+'?t='+Date.now();}
+      showMaintProgress('画像のアップロード完了','ok');
+    }else if(oldImgRelPath){
+      showMaintProgress('画像を移動中...','working');
+      try{
+        var getRes=await fetch(WORKER_URL+'/github',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'get',path:oldImgRelPath})});
+        var getData=await getRes.json();
+        var oldBase64=null;
+        if(getData.content){oldBase64=getData.content.replace(/\s/g,'');}
+        else if(getData.download_url){
+          try{
+            var rawRes=await fetch(getData.download_url);
+            if(rawRes.ok){
+              var rawBlob=await rawRes.blob();
+              oldBase64=await new Promise(function(resolve,reject){
+                var reader=new FileReader();
+                reader.onload=function(e){resolve(e.target.result.split(',')[1]);};
+                reader.onerror=reject;
+                reader.readAsDataURL(rawBlob);
+              });
+            }
+          }catch(e2){console.error('download_url error',e2);}
+        }
+        if(oldBase64){
+          await githubUpdateBinary(imgRelPath,oldBase64,'rename event image');
+          await githubDeleteFile(oldImgRelPath,'delete old event image after rename');
+          if(idx>=0){eventsData[idx].img=GITHUB_PAGES_BASE+'/'+imgRelPath+'?t='+Date.now();}
+          showMaintProgress('画像の移動完了','ok');
+        }else{showMaintProgress('旧画像の取得失敗（URLはそのまま維持）','error');}
+      }catch(e){console.error('rename error',e);showMaintProgress('画像移動エラー','error');}
+    }
+    if(savedImgDataUrl)showMaintProgress('データを保存中...','working');
+    await saveEventsToGitHub();
+    if(savedImgDataUrl){
+      showMaintProgress('保存完了！','ok');
+      await new Promise(function(resolve){setTimeout(resolve,800);});
+    }
+  }catch(e){
+    console.error('save error',e);
+    showMaintProgress('保存エラーが発生しました','error');
+    setSaveBtnState(mode,false);return;
+  }
+  pendingImgData=null;pendingImgFilename=null;
+  setSaveBtnState(mode,false);clearMaintProgress();
+  renderMaintEventList();
+  closeSubForm(mode==='new'?'event-new':'event-edit');
+  if(savedImgDataUrl){showSaveMessage('✅ 保存しました',savedImgDataUrl);}else{showSaveMessage('✅ 保存しました。');}
+}
+async function deleteEvent(){
+  if(!editingEventId)return;
+  if(!confirm('このイベントを削除しますか？'))return;
+  var delEv=eventsData.find(function(e){return e.id===editingEventId;});
+  var delImgRelPath=null;
+  if(delEv&&delEv.img){delImgRelPath='images/events/'+delEv.img.split('/').pop().split('?')[0];}
+  eventsData=eventsData.filter(function(e){return e.id!==editingEventId;});
+  try{await saveEventsToGitHub();if(delImgRelPath){await githubDeleteFile(delImgRelPath,'delete event image');}}
+  catch(e){console.error(e);}
+  closeSubForm('event-edit');
+  renderMaintEventList();
+  showSaveMessage('✅ 削除しました。');
+}
+
+function showMaintProgress(msg,type){
+  var overlay=document.querySelector('.maint-overlay.open');if(!overlay)return;
+  var el=overlay.querySelector('#maint-save-progress');
+  if(!el){
+    el=document.createElement('div');el.id='maint-save-progress';
+    el.style.cssText="margin:0.8rem 0 0;padding:0.5rem 0.8rem;background:rgba(44,26,14,0.05);"
+      +"border-radius:6px;font-size:12px;font-family:'Noto Sans JP',sans-serif;line-height:2;max-height:130px;overflow-y:auto";
+    var footer=overlay.querySelector('.mf-footer');
+    if(footer)footer.parentNode.insertBefore(el,footer);
+  }
+  var icon=type==='ok'?'✅':type==='error'?'❌':'⏳';
+  el.innerHTML+='<div>'+icon+' '+msg+'</div>';el.scrollTop=el.scrollHeight;
+}
+function clearMaintProgress(){document.querySelectorAll('#maint-save-progress').forEach(function(e){e.remove();});}
+function setSaveBtnState(mode,loading){
+  var modal=document.getElementById('maint-event-'+mode);if(!modal)return;
+  var btn=modal.querySelector('.mf-btn-save');
+  var cancelBtn=modal.querySelector('.mf-btn-cancel');
+  if(btn){btn.disabled=loading;btn.style.opacity=loading?'0.6':'1';btn.textContent=loading?'保存中...':(mode==='new'?'保存':'更新');}
+  if(cancelBtn){cancelBtn.disabled=loading;cancelBtn.style.opacity=loading?'0.4':'1';}
+}
+function showSaveMessage(msg,imgSrc){
+  var el=document.getElementById('save-message');
+  if(!el){
+    el=document.createElement('div');el.id='save-message';
+    el.style.cssText="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:#5c8a3a;color:#fff;padding:0.8rem 1.6rem;border-radius:8px;font-size:14px;font-family:'Noto Sans JP',sans-serif;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:opacity 0.5s;text-align:center;min-width:200px";
+    document.body.appendChild(el);
+  }
+  var imgHtml='';
+  if(imgSrc){imgHtml='<div style="margin-top:0.5rem"><img src="'+imgSrc+'" style="width:88px;height:66px;object-fit:cover;border-radius:4px;border:2px solid rgba(255,255,255,0.4)"/><div style="font-size:11px;opacity:0.85;margin-top:3px">↑ 保存された画像（反映には1〜2分かかります）</div></div>';}
+  el.innerHTML=msg+imgHtml;el.style.opacity='1';
+  clearTimeout(el._timer);
+  el._timer=setTimeout(function(){el.style.opacity='0';},imgSrc?7000:4000);
+}
+
+function openLightbox(src){var lb=document.getElementById('lightbox');document.getElementById('lightbox-img').src=src;lb.style.display='flex';}
+function closeLightbox(){document.getElementById('lightbox').style.display='none';document.getElementById('lightbox-img').src='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeLightbox();document.querySelectorAll('.maint-overlay.open').forEach(function(o){o.classList.remove('open');});}});
+</script>
+</body>
+</html>
