@@ -1,0 +1,32 @@
+[
+  {
+    "id": "202606201500",
+    "name": "JESUS is KING OF KINGS",
+    "start": "2026-06-20",
+    "end": "2026-06-20",
+    "stime": "15:00",
+    "etime": "17:00",
+    "reserve": "free",
+    "img": "https://or-church.github.io/or-church-test/images/events/202606201500.png?t=1780179955787"
+  },
+  {
+    "id": "202607311900",
+    "name": "廣瀬みちる「Prayer」ピアノソロ",
+    "start": "2026-07-31",
+    "end": "2026-07-31",
+    "stime": "19:00",
+    "etime": "21:00",
+    "reserve": "required",
+    "img": "https://or-church.github.io/or-church-test/images/events/202607311900.png?t=1780180052675"
+  },
+  {
+    "id": "202608011400",
+    "name": "Worship 3Bカフェ 2000回 Pre Party",
+    "start": "2026-08-01",
+    "end": "2026-08-01",
+    "stime": "14:00",
+    "etime": "17:00",
+    "reserve": "free",
+    "img": "https://or-church.github.io/or-church-test/images/events/202608011400.png?t=1780180116522"
+  }
+]
