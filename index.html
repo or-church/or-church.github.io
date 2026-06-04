@@ -775,6 +775,9 @@ function renderEventImages(lang){
 }
 
 /* ========== お知らせスライダー ========== */
+function linkify(text){
+  return text.replace(/(https?:\/\/[^\s　]+)/g,'<a href="$1" target="_blank" rel="noopener" style="color:#9e4028;word-break:break-all">$1</a>');
+}
 function renderNoticeBanner(lang){
   var el=document.getElementById('notice-banner-'+lang);
   if(!el)return;
@@ -784,7 +787,7 @@ function renderNoticeBanner(lang){
   var total=noticesData.length;
   var imgHtml=n.img?'<img class="notice-banner-img" src="'+n.img+'" alt=""/>':'';
   var title=lang==='ja'?'＜お知らせ＞':'&lt;Announcement&gt;';
-  var body=lang==='ja'?n.ja:(n.en||n.ja);
+  var body=linkify(lang==='ja'?n.ja:(n.en||n.ja));
   var navHtml='';
   var dotsHtml='';
   if(total>1){
