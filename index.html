@@ -757,13 +757,16 @@ function renderEventImages(lang){
 }
 
 /* ========== お知らせバナー ========== */
+function linkify(text){
+  return text.replace(/(https?:\/\/[^\s　]+)/g,'<a href="$1" target="_blank" rel="noopener" style="color:#9e4028;word-break:break-all">$1</a>');
+}
 function updateNoticeBanners(){
   var bja=document.getElementById('notice-banner-ja');
   var ben=document.getElementById('notice-banner-en');
   if(noticeData.ja){
-    bja.innerHTML='<span class="notice-banner-title">＜お知らせ＞</span><span class="notice-banner-body">'+noticeData.ja+'</span>';
+    bja.innerHTML='<span class="notice-banner-title">＜お知らせ＞</span><span class="notice-banner-body">'+linkify(noticeData.ja)+'</span>';
     bja.classList.add('active');
-    ben.innerHTML='<span class="notice-banner-title">&lt;Announcement&gt;</span><span class="notice-banner-body">'+noticeData.en+'</span>';
+    ben.innerHTML='<span class="notice-banner-title">&lt;Announcement&gt;</span><span class="notice-banner-body">'+linkify(noticeData.en)+'</span>';
     ben.classList.add('active');
   } else {
     bja.innerHTML=''; bja.classList.remove('active');
