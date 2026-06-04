@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8"/>
@@ -9,6 +9,7 @@
 @font-face{font-family:'Roxborough CF';src:url('fonts/RoxboroughCF-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:'JK Gothic';src:url('fonts/JKGothic-M.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
 *{margin:0;padding:0;box-sizing:border-box}
+html{background-color:#1a100a;color-scheme:light}
 body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font-size:15px;line-height:1.8}
 #login-wrap{height:100svh;display:flex;align-items:center;justify-content:center;background-color:#1a100a;background-image:linear-gradient(rgba(26,16,10,0.55),rgba(26,16,10,0.55)),url('images/admin/piano.png');background-size:cover;background-position:center 30%;background-repeat:no-repeat}
 .login-box{width:100%;max-width:600px;padding:2rem 2.5rem;text-align:center}
@@ -78,6 +79,9 @@ body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font
 .mf-img-drop.dragover{background:rgba(196,154,90,0.1)}
 .mf-img-preview{width:100%;max-height:200px;object-fit:contain;border-radius:6px;display:none}
 .translating{opacity:0.6;font-style:italic}
+.maint-reserve-badge{font-size:10px;border-radius:3px;padding:1px 6px;margin-left:5px;vertical-align:middle}
+.maint-reserve-req{color:#9e4028;background:rgba(158,64,40,0.08);border:0.5px solid rgba(158,64,40,0.3)}
+.maint-reserve-free{color:#7a5c20;background:rgba(196,154,90,0.12);border:0.5px solid rgba(196,154,90,0.4)}
 @media(max-width:540px){.mf-grid2{grid-template-columns:1fr}.admin-main{padding:1rem 0.8rem}}
 </style>
 </head>
@@ -108,12 +112,9 @@ body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font
     <div class="admin-section">
       <div class="admin-section-hd">
         <div class="admin-section-title">📢 お知らせ</div>
-        <div style="display:flex;gap:6px">
-          <button class="maint-btn-new" onclick="openForm('notice-new')">新規</button>
-          <button class="maint-btn-edit" onclick="openForm('notice-edit')">編集</button>
-        </div>
+        <button class="maint-btn-new" onclick="openForm('notice-new')">新規</button>
       </div>
-      <div class="admin-notice-preview" id="notice-current"><span class="admin-notice-none">（読み込み中...）</span></div>
+      <div id="maint-notice-list"><span style="font-size:13px;color:#8b5a3a">読み込み中...</span></div>
     </div>
     <div class="admin-section">
       <div class="admin-section-hd">
@@ -140,6 +141,12 @@ body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font
       <label class="mf-label">Translation</label>
       <textarea class="mf-textarea" id="fn-en" readonly placeholder="日本語を入力すると自動翻訳されます"></textarea>
     </div>
+    <div class="mf-section-label">画像（任意）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+      <div class="mf-img-drop" id="fn-drop" onclick="document.getElementById('fn-file').click()" ondragover="evtDragover(event,'fn-drop')" ondragleave="evtDragleave('fn-drop')" ondrop="noticeEvtDrop(event,'fn-drop','fn-img-preview')" style="height:120px;display:flex;align-items:center;justify-content:center">クリックまたは<br/>ドラッグ＆ドロップ<br/>で画像を選択</div>
+      <img id="fn-img-preview" class="mf-img-preview" alt="プレビュー" style="display:none;width:100%;max-height:110px;object-fit:contain;border-radius:6px;margin:6px 0"/>
+    </div>
+    <input type="file" id="fn-file" accept="image/*" style="display:none" onchange="handleNoticeImgFile(this,'fn-img-preview')"/>
     <div class="mf-footer">
       <button class="mf-btn-cancel" onclick="closeSubForm('notice-new')">キャンセル</button>
       <button class="mf-btn-save" onclick="saveNotice('new')">保存</button>
@@ -162,6 +169,12 @@ body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font
       <label class="mf-label">Translation</label>
       <textarea class="mf-textarea" id="fe-en" readonly></textarea>
     </div>
+    <div class="mf-section-label">画像（任意）</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start">
+      <div class="mf-img-drop" id="fe-drop" onclick="document.getElementById('fe-file').click()" ondragover="evtDragover(event,'fe-drop')" ondragleave="evtDragleave('fe-drop')" ondrop="noticeEvtDrop(event,'fe-drop','fe-img-preview')" style="height:120px;display:flex;align-items:center;justify-content:center">クリックまたは<br/>ドラッグ＆ドロップ<br/>で画像を変更（省略可）</div>
+      <img id="fe-img-preview" class="mf-img-preview" alt="プレビュー" style="display:none;width:100%;max-height:110px;object-fit:contain;border-radius:6px;margin:6px 0"/>
+    </div>
+    <input type="file" id="fe-file" accept="image/*" style="display:none" onchange="handleNoticeImgFile(this,'fe-img-preview')"/>
     <div class="mf-footer" style="margin-top:5px;border-top:none;padding-top:0">
       <div class="mf-delete-inline">
         <p>お知らせを削除すると表示が消えます。</p>
@@ -300,10 +313,12 @@ body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font
 var WORKER_URL='https://or-church-api.ukonmai.workers.dev';
 var GITHUB_PAGES_BASE='https://or-church.github.io';
 var eventsData=[];
-var noticeData={ja:'',en:''};
+var noticesData=[];
 var editingEventId=null;
+var editingNoticeId=null;
 var pendingImgData=null;
 var pendingImgFilename=null;
+var noticeImgData=null;
 var isTranslating=false;
 var translateTimer=null;
 
@@ -329,7 +344,7 @@ function logout(){
   if(!confirm('ログアウトしますか？'))return;
   document.getElementById('admin-wrap').style.display='none';
   document.getElementById('login-wrap').style.display='flex';
-  eventsData=[];noticeData={ja:'',en:''};
+  eventsData=[];noticesData=[];
 }
 
 async function githubUpdate(path,content,message){
@@ -381,22 +396,28 @@ async function loadNoticeFromGitHub(){
       for(var i=0;i<binary.length;i++){bytes[i]=binary.charCodeAt(i);}
       var decoded=new TextDecoder('utf-8').decode(bytes);
       var json=JSON.parse(decoded);
-      noticeData.ja=json.ja||'';
-      noticeData.en=json.en||'';
+      if(Array.isArray(json)){noticesData=json.slice().sort(function(a,b){return b.id>a.id?1:b.id<a.id?-1:0;});}
+      else if(json&&json.ja){noticesData=[{id:'legacy_'+Date.now(),ja:json.ja,en:json.en||'',img:json.img||''}];}
+      else{noticesData=[];}
     }
   }catch(e){console.log('notices.json load error',e);}
-  updateNoticePreview();
+  renderMaintNoticeList();
 }
 async function saveEventsToGitHub(){
   var sorted=eventsData.slice().sort(function(a,b){var ka=a.start+a.stime,kb=b.start+b.stime;return ka<kb?-1:ka>kb?1:0;});
   await githubUpdate('data/events.json',JSON.stringify(sorted,null,2),'update events');
 }
 
-function updateNoticePreview(){
-  var el=document.getElementById('notice-current');
-  if(!el)return;
-  if(noticeData.ja){el.innerHTML=noticeData.ja;el.style.fontStyle='normal';}
-  else{el.innerHTML='<span class="admin-notice-none">（お知らせなし）</span>';}
+function renderMaintNoticeList(){
+  var html='';
+  noticesData.forEach(function(n){
+    var preview=n.ja.length>35?n.ja.slice(0,35)+'…':n.ja;
+    html+='<div class="maint-row">'
+      +'<div class="maint-row-label"><span class="maint-event-name">'+preview+'</span></div>'
+      +'<div class="maint-btns-right"><button class="maint-btn-edit" onclick="openNoticeEdit(\''+n.id+'\')">編集</button></div>'
+      +'</div>';
+  });
+  document.getElementById('maint-notice-list').innerHTML=html||'<span style="font-size:13px;color:#8b5a3a">登録なし</span>';
 }
 
 async function saveNotice(mode){
@@ -409,23 +430,61 @@ async function saveNotice(mode){
   var wrap=document.getElementById(wrapId);
   if(!ja){wrap.classList.add('has-err');return;}
   wrap.classList.remove('has-err');
-  noticeData={ja:ja,en:en};
-  updateNoticePreview();
+  var ts=Date.now();
+  var imgRelPath=noticeImgData?('images/notices/notice_'+ts+'.png'):null;
+  var imgAbsUrl=imgRelPath?(GITHUB_PAGES_BASE+'/'+imgRelPath+'?t='+ts):'';
+  var oldImgRelPath=null;
+  if(mode==='new'){
+    noticesData.push({id:'notice_'+ts,ja:ja,en:en,img:noticeImgData?imgAbsUrl:''});
+  }else{
+    var idx=noticesData.findIndex(function(n){return n.id===editingNoticeId;});
+    if(idx>=0){
+      var oldImg=noticesData[idx].img||'';
+      if(noticeImgData&&oldImg){var oldFn=oldImg.split('/').pop().split('?')[0];oldImgRelPath='images/notices/'+oldFn;}
+      noticesData[idx]={id:editingNoticeId,ja:ja,en:en,img:noticeImgData?imgAbsUrl:(noticesData[idx].img||'')};
+    }
+  }
+  var savedNoticeImgData=noticeImgData;
+  setNoticeSaveBtnState(mode,true);
+  if(savedNoticeImgData)clearMaintProgress();
   try{
-    await githubUpdate('data/notices.json',JSON.stringify({ja:ja,en:en}),'update notice');
-  }catch(e){console.error(e);}
+    if(savedNoticeImgData&&imgRelPath){
+      showMaintProgress('画像をアップロード中...','working');
+      await githubUpdateBinary(imgRelPath,savedNoticeImgData.split(',')[1],'upload notice image');
+      if(oldImgRelPath){await githubDeleteFile(oldImgRelPath,'delete old notice image');}
+      showMaintProgress('画像のアップロード完了','ok');
+    }
+    if(savedNoticeImgData)showMaintProgress('データを保存中...','working');
+    await githubUpdate('data/notices.json',JSON.stringify(noticesData,null,2),'update notices');
+    if(savedNoticeImgData){
+      showMaintProgress('保存完了！','ok');
+      await new Promise(function(resolve){setTimeout(resolve,800);});
+    }
+  }catch(e){
+    console.error(e);
+    showMaintProgress('保存エラーが発生しました','error');
+    setNoticeSaveBtnState(mode,false);return;
+  }
+  noticeImgData=null;
+  setNoticeSaveBtnState(mode,false);clearMaintProgress();
+  renderMaintNoticeList();
   closeSubForm(mode==='new'?'notice-new':'notice-edit');
-  showSaveMessage('✅ お知らせを保存しました。');
+  if(savedNoticeImgData){showSaveMessage('✅ お知らせを保存しました。',savedNoticeImgData);}else{showSaveMessage('✅ お知らせを保存しました。');}
 }
 async function deleteNotice(){
-  if(!confirm('お知らせを削除しますか？'))return;
-  noticeData={ja:'',en:''};
-  updateNoticePreview();
+  if(!editingNoticeId)return;
+  if(!confirm('このお知らせを削除しますか？'))return;
+  var delN=noticesData.find(function(n){return n.id===editingNoticeId;});
+  var delImgRelPath=null;
+  if(delN&&delN.img){var fn=delN.img.split('/').pop().split('?')[0];delImgRelPath='images/notices/'+fn;}
+  noticesData=noticesData.filter(function(n){return n.id!==editingNoticeId;});
   try{
-    await githubUpdate('data/notices.json',JSON.stringify({ja:'',en:''}),'delete notice');
+    await githubUpdate('data/notices.json',JSON.stringify(noticesData,null,2),'delete notice');
+    if(delImgRelPath){await githubDeleteFile(delImgRelPath,'delete notice image');}
   }catch(e){console.error(e);}
   closeSubForm('notice-edit');
-  showSaveMessage('✅ お知らせを削除しました。');
+  renderMaintNoticeList();
+  showSaveMessage('✅ 削除しました。');
 }
 
 function closeSubForm(type){document.getElementById('maint-'+type).classList.remove('open');}
@@ -433,12 +492,9 @@ function openForm(type){
   if(type==='notice-new'){
     document.getElementById('fn-ja').value='';document.getElementById('fn-en').value='';
     document.getElementById('fn-ja-wrap').classList.remove('has-err');
+    document.getElementById('fn-img-preview').style.display='none';document.getElementById('fn-img-preview').src='';
+    noticeImgData=null;
     document.getElementById('maint-notice-new').classList.add('open');
-  }else if(type==='notice-edit'){
-    document.getElementById('fe-ja').value=noticeData.ja||'';
-    document.getElementById('fe-en').value=noticeData.en||'';
-    document.getElementById('fe-ja-wrap').classList.remove('has-err');
-    document.getElementById('maint-notice-edit').classList.add('open');
   }else if(type==='event-new'){
     var now=new Date();var today=now.toISOString().slice(0,10);
     var sh=now.getHours()+1;var stime=String(sh<24?sh:23).padStart(2,'0')+':00';
@@ -454,6 +510,18 @@ function openForm(type){
     var tg=document.getElementById('fev-time-group');if(tg)tg.style.display='grid';
     document.getElementById('maint-event-new').classList.add('open');
   }
+}
+function openNoticeEdit(id){
+  var n=noticesData.find(function(n){return n.id===id;});if(!n)return;
+  editingNoticeId=id;
+  document.getElementById('fe-ja').value=n.ja;
+  document.getElementById('fe-en').value=n.en||'';
+  document.getElementById('fe-ja-wrap').classList.remove('has-err');
+  var fePrev=document.getElementById('fe-img-preview');
+  if(n.img){fePrev.src=n.img;fePrev.style.display='block';fePrev.onerror=function(){fePrev.style.display='none';};}
+  else{fePrev.src='';fePrev.style.display='none';}
+  noticeImgData=null;
+  document.getElementById('maint-notice-edit').classList.add('open');
 }
 function openEventEdit(id){
   var ev=eventsData.find(function(e){return e.id===id;});if(!ev)return;
@@ -478,9 +546,15 @@ function renderMaintEventList(){
     var ed=new Date(ev.end||ev.start);ed.setHours(0,0,0,0);
     var isPast=ed<today;
     var pastBadge=isPast?'<span class="past-badge">終了</span>':'';
+    var reserveBadge=ev.reserve==='required'
+      ?'<span class="maint-reserve-badge maint-reserve-req">要予約</span>'
+      :'<span class="maint-reserve-badge maint-reserve-free">予約不要</span>';
+    var dateStr=ev.start+(ev.start!==ev.end?' 〜 '+ev.end:'')+(ev.stime?' '+ev.stime:'');
     html+='<div class="maint-row">'
-      +'<div><div class="maint-row-label"><span class="maint-event-name">'+ev.name+'</span>'+pastBadge+'</div>'
-      +'<div class="maint-row-sub">'+ev.start+(ev.start!==ev.end?' 〜 '+ev.end:'')+(ev.stime?' '+ev.stime:'')+'</div></div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div class="maint-row-label"><span class="maint-event-name">'+ev.name+'</span>'+pastBadge+reserveBadge+'</div>'
+      +'<div class="maint-row-sub">'+dateStr+'</div>'
+      +'</div>'
       +'<div class="maint-btns-right"><button class="maint-btn-edit" onclick="openEventEdit(\''+ev.id+'\')">編集</button></div>'
       +'</div>';
   });
@@ -509,6 +583,25 @@ async function doTranslate(type){
   isTranslating=false;
 }
 
+function handleNoticeImgFile(input,previewId){if(input.files[0])processNoticeImgFile(input.files[0],previewId);}
+function processNoticeImgFile(file,previewId){
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      var w=img.width,h=img.height;
+      if(w>512||h>512){var ratio=512/Math.max(w,h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
+      var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      noticeImgData=canvas.toDataURL('image/png');
+      var prev=document.getElementById(previewId);prev.onerror=null;prev.src=noticeImgData;prev.style.display='block';
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function noticeEvtDrop(e,dropId,previewId){e.preventDefault();document.getElementById(dropId).classList.remove('dragover');var f=e.dataTransfer.files[0];if(f)processNoticeImgFile(f,previewId);}
+
 function evtDragover(e,dropId){e.preventDefault();document.getElementById(dropId).classList.add('dragover');}
 function evtDragleave(dropId){document.getElementById(dropId).classList.remove('dragover');}
 function evtDrop(e,fileId,previewId,mode){e.preventDefault();evtDragleave(fileId.replace('file','drop'));var f=e.dataTransfer.files[0];if(f)processImgFile(f,previewId,mode);}
@@ -519,7 +612,7 @@ function processImgFile(file,previewId,mode){
     var img=new Image();
     img.onload=function(){
       var w=img.width,h=img.height;
-      if(w>1024||h>1024){var ratio=Math.min(1024/w,1024/h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
+      if(w>1024||h>1024){var ratio=1024/Math.max(w,h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
       var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
       canvas.getContext('2d').drawImage(img,0,0,w,h);
       var dataUrl=canvas.toDataURL('image/png');
@@ -535,7 +628,7 @@ function buildEventId(start,stime,isMultiDay){
   return start.replace(/-/g,'')+stime.replace(':','');
 }
 function buildImgFilename(start,stime,isMultiDay){
-  return buildEventId(start,stime,isMultiDay)+'_'+Date.now()+'.png';
+  return 'event_'+buildEventId(start,stime,isMultiDay)+'_'+Date.now()+'.png';
 }
 
 function onFevStartChange(){
@@ -687,6 +780,13 @@ function showMaintProgress(msg,type){
   el.innerHTML+='<div>'+icon+' '+msg+'</div>';el.scrollTop=el.scrollHeight;
 }
 function clearMaintProgress(){document.querySelectorAll('#maint-save-progress').forEach(function(e){e.remove();});}
+function setNoticeSaveBtnState(mode,loading){
+  var modal=document.getElementById('maint-notice-'+mode);if(!modal)return;
+  var btn=modal.querySelector('.mf-btn-save');
+  var cancelBtn=modal.querySelector('.mf-btn-cancel');
+  if(btn){btn.disabled=loading;btn.style.opacity=loading?'0.6':'1';btn.textContent=loading?'保存中...':(mode==='new'?'保存':'更新');}
+  if(cancelBtn){cancelBtn.disabled=loading;cancelBtn.style.opacity=loading?'0.4':'1';}
+}
 function setSaveBtnState(mode,loading){
   var modal=document.getElementById('maint-event-'+mode);if(!modal)return;
   var btn=modal.querySelector('.mf-btn-save');
