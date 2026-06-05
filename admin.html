@@ -11,7 +11,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html{background-color:#1a100a;color-scheme:light}
 body{background:#e8ddd0;color:#2c1a0e;font-family:'Noto Sans JP',sans-serif;font-size:15px;line-height:1.8}
-#login-wrap{height:100svh;display:flex;align-items:center;justify-content:center;background-color:#1a100a;background-image:linear-gradient(rgba(26,16,10,0.55),rgba(26,16,10,0.55)),url('images/admin/piano.png');background-size:cover;background-position:center 30%;background-repeat:no-repeat}
+#login-wrap{height:100svh;display:flex;align-items:center;justify-content:center;background-color:#1a100a;background-image:linear-gradient(rgba(26,16,10,0.55),rgba(26,16,10,0.55)),url('images/admin/piano.webp');background-size:cover;background-position:center 30%;background-repeat:no-repeat}
 .login-box{width:100%;max-width:600px;padding:2rem 2.5rem;text-align:center}
 .login-logo-area{margin-bottom:1.2rem}
 .login-site-name{font-family:'Roxborough CF','Cormorant Garamond',serif;font-style:normal;font-weight:400;font-size:clamp(2.8rem,8vw,4.5rem);line-height:1.08;letter-spacing:0.01em;display:block;text-align:center}
@@ -431,7 +431,7 @@ async function saveNotice(mode){
   if(!ja){wrap.classList.add('has-err');return;}
   wrap.classList.remove('has-err');
   var ts=Date.now();
-  var imgRelPath=noticeImgData?('images/notices/notice_'+ts+'.png'):null;
+  var imgRelPath=noticeImgData?('images/notices/notice_'+ts+'.webp'):null;
   var imgAbsUrl=imgRelPath?(GITHUB_PAGES_BASE+'/'+imgRelPath+'?t='+ts):'';
   var oldImgRelPath=null;
   if(mode==='new'){
@@ -590,10 +590,10 @@ function processNoticeImgFile(file,previewId){
     var img=new Image();
     img.onload=function(){
       var w=img.width,h=img.height;
-      if(w>512||h>512){var ratio=512/Math.max(w,h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
+      if(w>256||h>256){var ratio=256/Math.max(w,h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
       var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
       canvas.getContext('2d').drawImage(img,0,0,w,h);
-      noticeImgData=canvas.toDataURL('image/png');
+      noticeImgData=canvas.toDataURL('image/webp',0.85);
       var prev=document.getElementById(previewId);prev.onerror=null;prev.src=noticeImgData;prev.style.display='block';
     };
     img.src=e.target.result;
@@ -612,10 +612,10 @@ function processImgFile(file,previewId,mode){
     var img=new Image();
     img.onload=function(){
       var w=img.width,h=img.height;
-      if(w>1024||h>1024){var ratio=1024/Math.max(w,h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
+      if(w>800||h>800){var ratio=800/Math.max(w,h);w=Math.round(w*ratio);h=Math.round(h*ratio);}
       var canvas=document.createElement('canvas');canvas.width=w;canvas.height=h;
       canvas.getContext('2d').drawImage(img,0,0,w,h);
-      var dataUrl=canvas.toDataURL('image/png');
+      var dataUrl=canvas.toDataURL('image/webp',0.85);
       pendingImgData=dataUrl;
       var prev=document.getElementById(previewId);prev.onerror=null;prev.src=dataUrl;prev.style.display='block';
     };
@@ -628,7 +628,7 @@ function buildEventId(start,stime,isMultiDay){
   return start.replace(/-/g,'')+stime.replace(':','');
 }
 function buildImgFilename(start,stime,isMultiDay){
-  return 'event_'+buildEventId(start,stime,isMultiDay)+'_'+Date.now()+'.png';
+  return 'event_'+buildEventId(start,stime,isMultiDay)+'_'+Date.now()+'.webp';
 }
 
 function onFevStartChange(){

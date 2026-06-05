@@ -3,6 +3,7 @@
 <head>
 <link href="images/favicon/favicon.png" rel="icon" type="image/png"/>
 <link href="images/favicon/favicon.png" rel="shortcut icon" type="image/png"/>
+<link rel="preload" as="image" href="images/home/cross.webp"/>
 <meta charset="utf-8"/>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -61,7 +62,8 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 .contact-btn{background:none;border:none;cursor:pointer;padding:0;display:block;margin-bottom:0.2rem;text-align:left}
 .footer-bottom{padding:1rem clamp(1rem,3vw,2rem);text-align:center;font-size:clamp(0.58rem,0.9vw,0.7rem);color:rgba(245,237,227,0.3)}
 .hero{position:relative;height:100svh;min-height:480px;overflow:hidden;display:flex;align-items:center;justify-content:center;background-color:#2c1a0e}
-.hero-photo{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.42}
+.hero-photo{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center center;opacity:0.42;animation:heroImgIn 1s ease-in both}
+@keyframes heroImgIn{from{opacity:0}to{opacity:0.42}}
 .hero-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(3rem,6vw,5rem) clamp(1rem,3vw,2rem);color:#f5ede3;width:100%}
 .hero-eyebrow{font-size:clamp(0.78rem,1.8vw,1.05rem);letter-spacing:0.12em;color:#d4b89a;margin-bottom:1.2rem}
 .hero-title{font-family:'Roxborough CF','Cormorant Garamond',serif;font-size:clamp(2.2rem,8vw,6rem);font-weight:400;font-style:normal;line-height:1.12;color:#f5ede3;letter-spacing:0.01em}
@@ -206,8 +208,8 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 </nav>
 <!-- HOME -->
 <div class="page" id="page-home">
-<section class="hero">
-<img alt="OR Church and Coffee" class="hero-photo" src="images/home/cross.png"/>
+<section class="hero" id="home-hero" style="opacity:0">
+<img alt="OR Church and Coffee" class="hero-photo" src="images/home/cross.webp" fetchpriority="high"/>
 <div class="hero-content">
 <span class="hero-eyebrow">教会とコーヒー豆焙煎のお店</span>
 <h1 class="hero-title" style="font-style:normal">
@@ -219,6 +221,14 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <p class="hero-verse">OR (オル) ＝ ヘブル語で 光</p>
 </div>
 </section>
+<script>
+(function(){
+  var hero=document.getElementById('home-hero');
+  var img=hero.querySelector('.hero-photo');
+  function showHero(){hero.style.transition='opacity 0.7s ease';hero.style.opacity='1';}
+  if(img.complete){showHero();}else{img.addEventListener('load',showHero);}
+})();
+</script>
 <section class="welcome-sec">
 <div class="welcome-inner">
 <div class="notice-banner" id="notice-banner-ja"></div>
@@ -243,7 +253,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <div class="page-header"><h1>教会</h1><p class="sub">神の愛と共に心安らぐひとときを</p><div class="page-rule"></div></div>
 <section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)">
 <div class="inner" style="text-align:center">
-<img alt="教会内部" class="reveal" src="images/church/interior.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/>
+<img alt="教会内部" class="reveal" src="images/church/interior.webp" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/>
 </div>
 </section>
 <section class="sec" style="background-color:#faf6f0"><div class="inner">
@@ -267,7 +277,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <div class="thin-rule"></div>
 <p class="reveal" style="font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:#2c1a0e;margin-bottom:1.8rem">JCMNが掲げる「教会の7つの本質」は、2000年に世界中の教会リーダーたちが集まり、聖書に基づく教会の在り方を話し合って導き出されたものです。方法論ではなく「本質」に焦点を当てており、教会がいのちに満ちた共同体として成長するための指針として、多くの信徒に力強い土台を与えています。</p>
 <div class="reveal" style="text-align:center;margin-bottom:2.5rem">
-<img alt="教会の7つの本質" src="images/church/7_essentials.png" style="max-width:50%;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.1)"/>
+<img alt="教会の7つの本質" src="images/church/7_essentials.webp" style="max-width:50%;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.1)"/>
 <p style="margin-top:0.7rem;font-size:clamp(0.72rem,1.3vw,0.85rem);color:#8b5a3a;font-style:italic">「かさのイエでねて」— 7つの本質を覚えるための合言葉</p>
 </div>
 <div class="church-grid">
@@ -284,7 +294,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <!-- ROASTING -->
 <div class="page" id="page-coffee">
 <div class="page-header"><h1>コーヒー</h1><p class="sub">恵みのひととき</p><div class="page-rule"></div></div>
-<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)"><div class="inner" style="text-align:center"><img alt="恵みのひととき" class="reveal" src="images/coffee/piano.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/></div></section>
+<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)"><div class="inner" style="text-align:center"><img alt="恵みのひととき" class="reveal" src="images/coffee/piano.webp" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/></div></section>
 <section class="sec" style="background-color:#2c1a0e;color:#f5ede3"><div class="inner">
 <div class="sec-label reveal"><div class="badge" style="background-color:#c49a5a">焙煎</div><span class="sec-title" style="color:#f5ede3">コーヒー焙煎 &amp; 恵みのひととき</span></div>
 <div class="thin-rule" style="background:linear-gradient(to right,transparent,rgba(196,154,90,0.4),transparent)"></div>
@@ -340,30 +350,30 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <p style="line-height:1.9;margin-top:1rem">〒131-0041<br/>東京都墨田区八広5−27−12<br/>京成電鉄押上線八広(やひろ)駅 南口 徒歩5分<br/>駐車場2台あり（満車の場合は周辺駐車場をご利用ください）</p>
 </div>
 </div>
-<div class="map-wrap reveal"><img alt="地図" src="images/access/map.png" style="width:100%;border-radius:6px;display:block"/><p class="map-caption">東京都墨田区八広5−27−12　／　京成電鉄押上線八広(やひろ)駅 南口 徒歩5分</p></div>
+<div class="map-wrap reveal"><img alt="地図" src="images/access/map.webp" style="width:100%;border-radius:6px;display:block"/><p class="map-caption">東京都墨田区八広5−27−12　／　京成電鉄押上線八広(やひろ)駅 南口 徒歩5分</p></div>
 <div class="access-note reveal">「求めなさい。そうすれば与えられます。探しなさい。そうすれば見出します。たたきなさい。そうすれば開かれます。」— マタイ7:7<br/>ご来店の際はお気軽にお電話またはメールでお問い合わせください。初めての方も大歓迎です。</div>
 </div></section>
 <section class="sec" style="background-color:#faf6f0"><div class="inner">
 <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.5rem);font-weight:400;color:#5c3520;text-align:center;margin-bottom:0.4rem">道順</h2>
 <p class="reveal" style="text-align:center;font-size:clamp(0.78rem,1.5vw,0.92rem);color:#8b5a3a;margin-bottom:2.5rem">八広駅 南口からの道順</p>
 <div class="directions-list">
-<div class="direction-step reveal"><div class="step-num">1</div><img alt="道順1" class="step-photo" src="images/access/d_01.png"/><div class="step-body"><p class="step-text">改札を出たら左へ曲がります。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">2</div><img alt="道順2" class="step-photo" src="images/access/d_02.png"/><div class="step-body"><p class="step-text">南口を降ります。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">3</div><img alt="道順3" class="step-photo" src="images/access/d_03.png"/><div class="step-body"><p class="step-text">降りたら斜め左へ進みます。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">4</div><img alt="道順4" class="step-photo" src="images/access/d_04.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">5</div><img alt="道順5" class="step-photo" src="images/access/d_05.png"/><div class="step-body"><p class="step-text">大通りまで来たら左へ曲がります。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">6</div><img alt="道順6" class="step-photo" src="images/access/d_06.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">7</div><img alt="道順7" class="step-photo" src="images/access/d_07.png"/><div class="step-body"><p class="step-text">右へ曲がり横断歩道を渡ります。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">8</div><img alt="道順8" class="step-photo" src="images/access/d_08.png"/><div class="step-body"><p class="step-text">右へ曲がり直進します。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">9</div><img alt="道順9" class="step-photo" src="images/access/d_09.png"/><div class="step-body"><p class="step-text">左へ曲がります。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">10</div><img alt="道順10" class="step-photo" src="images/access/d_10.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">11</div><img alt="道順11" class="step-photo" src="images/access/d_11.png"/><div class="step-body"><p class="step-text">斜め右へ進みます。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">12</div><img alt="道順12" class="step-photo" src="images/access/d_12.png"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">13</div><img alt="道順13" class="step-photo" src="images/access/d_13.png"/><div class="step-body"><p class="step-text">左へ曲がり直進します。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">14</div><img alt="道順14" class="step-photo" src="images/access/d_14.png"/><div class="step-body"><p class="step-text">左の道路を直進します。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">15</div><img alt="道順15" class="step-photo" src="images/access/d_15.png"/><div class="step-body"><p class="step-text">右側にある電柱の隣にあるクリーム色の建物が教会になります。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">16</div><img alt="道順16" class="step-photo" src="images/access/d_16.png"/><div class="step-body"><p class="step-text">外壁が"イエスの血潮"にデザインされています。</p></div></div>
-<div class="direction-step reveal"><div class="step-num">17</div><img alt="道順17" class="step-photo-large" src="images/access/d_17.png"/><div class="step-body"><p class="step-text">教会に着きました！</p></div></div>
+<div class="direction-step reveal"><div class="step-num">1</div><img alt="道順1" class="step-photo" src="images/access/d_01.webp"/><div class="step-body"><p class="step-text">改札を出たら左へ曲がります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">2</div><img alt="道順2" class="step-photo" src="images/access/d_02.webp"/><div class="step-body"><p class="step-text">南口を降ります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">3</div><img alt="道順3" class="step-photo" src="images/access/d_03.webp"/><div class="step-body"><p class="step-text">降りたら斜め左へ進みます。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">4</div><img alt="道順4" class="step-photo" src="images/access/d_04.webp"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">5</div><img alt="道順5" class="step-photo" src="images/access/d_05.webp"/><div class="step-body"><p class="step-text">大通りまで来たら左へ曲がります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">6</div><img alt="道順6" class="step-photo" src="images/access/d_06.webp"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">7</div><img alt="道順7" class="step-photo" src="images/access/d_07.webp"/><div class="step-body"><p class="step-text">右へ曲がり横断歩道を渡ります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">8</div><img alt="道順8" class="step-photo" src="images/access/d_08.webp"/><div class="step-body"><p class="step-text">右へ曲がり直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">9</div><img alt="道順9" class="step-photo" src="images/access/d_09.webp"/><div class="step-body"><p class="step-text">左へ曲がります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">10</div><img alt="道順10" class="step-photo" src="images/access/d_10.webp"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">11</div><img alt="道順11" class="step-photo" src="images/access/d_11.webp"/><div class="step-body"><p class="step-text">斜め右へ進みます。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">12</div><img alt="道順12" class="step-photo" src="images/access/d_12.webp"/><div class="step-body"><p class="step-text">直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">13</div><img alt="道順13" class="step-photo" src="images/access/d_13.webp"/><div class="step-body"><p class="step-text">左へ曲がり直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">14</div><img alt="道順14" class="step-photo" src="images/access/d_14.webp"/><div class="step-body"><p class="step-text">左の道路を直進します。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">15</div><img alt="道順15" class="step-photo" src="images/access/d_15.webp"/><div class="step-body"><p class="step-text">右側にある電柱の隣にあるクリーム色の建物が教会になります。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">16</div><img alt="道順16" class="step-photo" src="images/access/d_16.webp"/><div class="step-body"><p class="step-text">外壁が"イエスの血潮"にデザインされています。</p></div></div>
+<div class="direction-step reveal"><div class="step-num">17</div><img alt="道順17" class="step-photo-large" src="images/access/d_17.webp"/><div class="step-body"><p class="step-text">教会に着きました！</p></div></div>
 </div>
 </div></section>
 </div>
@@ -394,7 +404,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <!-- ENGLISH VERSION -->
 <div class="page" id="page-en-home">
 <section class="hero">
-<img alt="OR Church and Coffee" class="hero-photo" src="images/home/cross.png"/>
+<img alt="OR Church and Coffee" class="hero-photo" src="images/home/cross.webp"/>
 <div class="hero-content">
 <span class="hero-eyebrow">Church &amp; Coffee Roaster</span>
 <h1 class="hero-title" style="font-style:normal"><span class="line1">OR Church</span><span class="line2">and Coffee</span></h1>
@@ -424,7 +434,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 </div>
 <div class="page" id="page-en-church">
 <div class="page-header"><h1>CHURCH</h1><p class="sub">A place of warmth, faith, and community</p><div class="page-rule"></div></div>
-<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)"><div class="inner" style="text-align:center"><img alt="Church interior" class="reveal" src="images/church/interior.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/></div></section>
+<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)"><div class="inner" style="text-align:center"><img alt="Church interior" class="reveal" src="images/church/interior.webp" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/></div></section>
 <section class="sec" style="background-color:#faf6f0"><div class="inner">
 <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.5rem,4vw,2.8rem);color:#5c3520;text-align:center;margin-bottom:0.4rem">What is OR (オル)?</h2>
 <p class="reveal" style="text-align:center;font-size:clamp(0.65rem,1.2vw,0.8rem);letter-spacing:0.22em;color:#9e4028;margin-bottom:2rem">OR means "Light" in Hebrew</p>
@@ -445,7 +455,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <div class="sec-label reveal"><div class="badge">Vision</div><span class="sec-title">The 7 Essentials of the Church</span></div>
 <div class="thin-rule"></div>
 <p class="reveal" style="font-size:clamp(0.82rem,1.8vw,0.97rem);line-height:2.1;color:#2c1a0e;margin-bottom:1.8rem">The "7 Essentials of the Church" put forward by JCMN were drawn up in 2000 when church leaders from around the world gathered to discuss what a biblically grounded church looks like. Focused on "essentials" rather than methods, these principles serve as a powerful foundation for many believers — a guide for the church to grow as a life-filled community.</p>
-<div class="reveal" style="text-align:center;margin-bottom:2.5rem"><img alt="7 Essentials of the Church" src="images/church/7_essentials.png" style="max-width:50%;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.1)"/><p style="margin-top:0.7rem;font-size:clamp(0.72rem,1.3vw,0.85rem);color:#8b5a3a;font-style:italic">"Kasa no Ie de Nete" — a Japanese mnemonic for remembering all 7 essentials</p></div>
+<div class="reveal" style="text-align:center;margin-bottom:2.5rem"><img alt="7 Essentials of the Church" src="images/church/7_essentials.webp" style="max-width:50%;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.1)"/><p style="margin-top:0.7rem;font-size:clamp(0.72rem,1.3vw,0.85rem);color:#8b5a3a;font-style:italic">"Kasa no Ie de Nete" — a Japanese mnemonic for remembering all 7 essentials</p></div>
 <div class="church-grid">
 <div class="card reveal"><h3>Relationships</h3><p>Deepening with God and connecting as His family. In our worship, each person comes before God just as they are, building a deeper relationship with Him and with one another through prayer.</p></div>
 <div class="card reveal"><h3>Participation</h3><p>The joy of serving together. "Offer your bodies as a living sacrifice, holy and pleasing to God." (Romans 12:1). Through service, our very being is opened toward God.</p></div>
@@ -459,7 +469,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 </div>
 <div class="page" id="page-en-coffee">
 <div class="page-header"><h1>COFFEE</h1><p class="sub">A moment of grace</p><div class="page-rule"></div></div>
-<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)"><div class="inner" style="text-align:center"><img alt="A moment of grace" class="reveal" src="images/coffee/piano.png" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/></div></section>
+<section class="sec" style="background-color:#faf6f0;padding-top:clamp(1.5rem,3vw,3rem);padding-bottom:clamp(1.5rem,3vw,3rem)"><div class="inner" style="text-align:center"><img alt="A moment of grace" class="reveal" src="images/coffee/piano.webp" style="max-width:1024px;width:100%;border-radius:8px;box-shadow:0 4px 20px rgba(44,26,14,0.1)"/></div></section>
 <section class="sec" style="background-color:#2c1a0e;color:#f5ede3"><div class="inner">
 <div class="sec-label reveal"><div class="badge" style="background-color:#c49a5a">Roast</div><span class="sec-title" style="color:#f5ede3">Coffee Roasting &amp; a Moment of Grace</span></div>
 <div class="thin-rule" style="background:linear-gradient(to right,transparent,rgba(196,154,90,0.4),transparent)"></div>
@@ -502,30 +512,30 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <div class="reveal"><h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2.5vw,1.5rem);color:#5c3520;margin-bottom:0.9rem">Opening Hours</h3><div class="hours-dl"><div class="hours-item"><span class="hours-time">We operate on irregular hours — please contact us in advance before visiting.</span></div></div><p class="hours-note">※ Worship is held on Sundays 11:00–12:00.<br/>(All are welcome to join.)</p></div>
 <div class="access-col reveal"><h3>Contact &amp; Access</h3><p style="line-height:1.9">Tel：<span id="en-tel-disp" style="color:#9e4028;cursor:pointer">080-4329-6712</span><br/>Mail：<span id="en-mail-disp" style="color:#9e4028;cursor:pointer"></span><br/>Evangelist: Miyuki Sakamoto</p><p style="line-height:1.9;margin-top:1rem">〒131-0041<br/>5-27-12 Yahiro, Sumida City, Tokyo<br/>5 min walk from Yahiro Station (South Exit),<br/>Keisei Oshiage Line<br/>2 parking spaces available</p></div>
 </div>
-<div class="map-wrap reveal"><img alt="Map" src="images/access/map.png" style="width:100%;border-radius:6px;display:block"/><p class="map-caption">5-27-12 Yahiro, Sumida City, Tokyo  /  5 min walk from Yahiro Station South Exit</p></div>
+<div class="map-wrap reveal"><img alt="Map" src="images/access/map.webp" style="width:100%;border-radius:6px;display:block"/><p class="map-caption">5-27-12 Yahiro, Sumida City, Tokyo  /  5 min walk from Yahiro Station South Exit</p></div>
 <div class="access-note reveal">"Ask and it will be given to you; seek and you will find; knock and the door will be opened to you." — Matthew 7:7<br/>Please feel free to contact us by phone or email before visiting. First-time visitors are very welcome.</div>
 </div></section>
 <section class="sec" style="background-color:#faf6f0"><div class="inner">
 <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.5rem);font-weight:400;color:#5c3520;text-align:center;margin-bottom:0.4rem">Directions</h2>
 <p class="reveal" style="text-align:center;font-size:clamp(0.78rem,1.5vw,0.92rem);color:#8b5a3a;margin-bottom:2.5rem">Walking directions from Yahiro Station (South Exit)</p>
 <div class="directions-list">
-<div class="direction-step reveal"><div class="step-num">1</div><img alt="Step 1" class="step-photo" src="images/access/d_01.png"/><div class="step-body"><p class="step-text">Exit through the ticket gates and turn left.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">2</div><img alt="Step 2" class="step-photo" src="images/access/d_02.png"/><div class="step-body"><p class="step-text">Take the stairs down to the South Exit.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">3</div><img alt="Step 3" class="step-photo" src="images/access/d_03.png"/><div class="step-body"><p class="step-text">Once outside, head diagonally to the left.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">4</div><img alt="Step 4" class="step-photo" src="images/access/d_04.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">5</div><img alt="Step 5" class="step-photo" src="images/access/d_05.png"/><div class="step-body"><p class="step-text">When you reach the main road, turn left.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">6</div><img alt="Step 6" class="step-photo" src="images/access/d_06.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">7</div><img alt="Step 7" class="step-photo" src="images/access/d_07.png"/><div class="step-body"><p class="step-text">Turn right and cross at the pedestrian crossing.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">8</div><img alt="Step 8" class="step-photo" src="images/access/d_08.png"/><div class="step-body"><p class="step-text">Turn right and continue straight ahead.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">9</div><img alt="Step 9" class="step-photo" src="images/access/d_09.png"/><div class="step-body"><p class="step-text">Turn left.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">10</div><img alt="Step 10" class="step-photo" src="images/access/d_10.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">11</div><img alt="Step 11" class="step-photo" src="images/access/d_11.png"/><div class="step-body"><p class="step-text">Head diagonally to the right.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">12</div><img alt="Step 12" class="step-photo" src="images/access/d_12.png"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">13</div><img alt="Step 13" class="step-photo" src="images/access/d_13.png"/><div class="step-body"><p class="step-text">Turn left and continue straight ahead.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">14</div><img alt="Step 14" class="step-photo" src="images/access/d_14.png"/><div class="step-body"><p class="step-text">Continue straight along the road on the left.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">15</div><img alt="Step 15" class="step-photo" src="images/access/d_15.png"/><div class="step-body"><p class="step-text">The cream-colored building next to the utility pole on the right is the church.</p></div></div>
-<div class="direction-step reveal"><div class="step-num">16</div><img alt="Step 16" class="step-photo" src="images/access/d_16.png"/><div class="step-body"><p class="step-text">The exterior wall is designed in the image of "the blood of Jesus."</p></div></div>
-<div class="direction-step reveal"><div class="step-num">17</div><img alt="Step 17" class="step-photo-large" src="images/access/d_17.png"/><div class="step-body"><p class="step-text">You have arrived at the church!</p></div></div>
+<div class="direction-step reveal"><div class="step-num">1</div><img alt="Step 1" class="step-photo" src="images/access/d_01.webp"/><div class="step-body"><p class="step-text">Exit through the ticket gates and turn left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">2</div><img alt="Step 2" class="step-photo" src="images/access/d_02.webp"/><div class="step-body"><p class="step-text">Take the stairs down to the South Exit.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">3</div><img alt="Step 3" class="step-photo" src="images/access/d_03.webp"/><div class="step-body"><p class="step-text">Once outside, head diagonally to the left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">4</div><img alt="Step 4" class="step-photo" src="images/access/d_04.webp"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">5</div><img alt="Step 5" class="step-photo" src="images/access/d_05.webp"/><div class="step-body"><p class="step-text">When you reach the main road, turn left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">6</div><img alt="Step 6" class="step-photo" src="images/access/d_06.webp"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">7</div><img alt="Step 7" class="step-photo" src="images/access/d_07.webp"/><div class="step-body"><p class="step-text">Turn right and cross at the pedestrian crossing.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">8</div><img alt="Step 8" class="step-photo" src="images/access/d_08.webp"/><div class="step-body"><p class="step-text">Turn right and continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">9</div><img alt="Step 9" class="step-photo" src="images/access/d_09.webp"/><div class="step-body"><p class="step-text">Turn left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">10</div><img alt="Step 10" class="step-photo" src="images/access/d_10.webp"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">11</div><img alt="Step 11" class="step-photo" src="images/access/d_11.webp"/><div class="step-body"><p class="step-text">Head diagonally to the right.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">12</div><img alt="Step 12" class="step-photo" src="images/access/d_12.webp"/><div class="step-body"><p class="step-text">Continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">13</div><img alt="Step 13" class="step-photo" src="images/access/d_13.webp"/><div class="step-body"><p class="step-text">Turn left and continue straight ahead.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">14</div><img alt="Step 14" class="step-photo" src="images/access/d_14.webp"/><div class="step-body"><p class="step-text">Continue straight along the road on the left.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">15</div><img alt="Step 15" class="step-photo" src="images/access/d_15.webp"/><div class="step-body"><p class="step-text">The cream-colored building next to the utility pole on the right is the church.</p></div></div>
+<div class="direction-step reveal"><div class="step-num">16</div><img alt="Step 16" class="step-photo" src="images/access/d_16.webp"/><div class="step-body"><p class="step-text">The exterior wall is designed in the image of "the blood of Jesus."</p></div></div>
+<div class="direction-step reveal"><div class="step-num">17</div><img alt="Step 17" class="step-photo-large" src="images/access/d_17.webp"/><div class="step-body"><p class="step-text">You have arrived at the church!</p></div></div>
 </div>
 </div></section>
 </div>
@@ -559,7 +569,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <div class="thin-rule"></div>
 <div class="reveal" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.8fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start">
 <div style="text-align:center">
-<img alt="Miyuki Sakamoto" src="images/staff/miyuki.png" style="width:100%;max-width:260px;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.12)"/>
+<img alt="Miyuki Sakamoto" src="images/staff/miyuki.webp" style="width:100%;max-width:260px;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.12)"/>
 <p style="margin-top:1rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2.2vw,1.3rem);color:#5c3520;font-weight:600">Miyuki Sakamoto</p>
 <p style="font-size:clamp(0.68rem,1.2vw,0.82rem);letter-spacing:0.18em;color:#9e4028;margin-top:0.2rem">坂本 美由紀</p>
 </div>
@@ -580,7 +590,7 @@ footer{background-color:#2c1a0e;color:rgba(245,237,227,0.7)}
 <div class="thin-rule"></div>
 <div class="reveal" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.8fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:start">
 <div style="text-align:center">
-<img alt="Miyuki Sakamoto" src="images/staff/miyuki.png" style="width:100%;max-width:260px;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.12)"/>
+<img alt="Miyuki Sakamoto" src="images/staff/miyuki.webp" style="width:100%;max-width:260px;border-radius:8px;box-shadow:0 4px 16px rgba(44,26,14,0.12)"/>
 <p style="margin-top:1rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1rem,2.2vw,1.3rem);color:#5c3520;font-weight:600">Miyuki Sakamoto</p>
 <p style="font-size:clamp(0.68rem,1.2vw,0.82rem);letter-spacing:0.18em;color:#9e4028;margin-top:0.2rem">坂本 美由紀</p>
 </div>
