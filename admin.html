@@ -410,7 +410,8 @@ async function saveEventsToGitHub(){
 
 function renderMaintNoticeList(){
   var html='';
-  noticesData.forEach(function(n){
+  var sorted=noticesData.slice().sort(function(a,b){return b.id>a.id?1:b.id<a.id?-1:0;});
+  sorted.forEach(function(n){
     var preview=n.ja.length>35?n.ja.slice(0,35)+'…':n.ja;
     html+='<div class="maint-row">'
       +'<div class="maint-row-label"><span class="maint-event-name">'+preview+'</span></div>'
