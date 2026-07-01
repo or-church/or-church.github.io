@@ -776,7 +776,7 @@ function renderEventImages(lang){
     var reserveBox='';
     if(e.reserve==='required'){
       var body=lang==='ja'?'ご参加には事前予約が必要です。ご予約は下記までお願いいたします。ご予約の際は、お名前と参加人数をお知らせください。':'Reservation is required to attend. Please contact us at the details below. Please provide your name and number of participants.';
-      reserveBox='<div class="event-reservation-box"><span style="display:block;margin-bottom:0.4rem">'+body+'</span><span style="display:block">Tel：<span style="color:#9e4028;cursor:pointer" onclick="window.location.href=\'tel:080-4329-6712\'">080-4329-6712</span></span><span style="display:block">Mail：<span style="color:#9e4028;cursor:pointer" onclick="window.location.href=\'mailto:orchrch2024@gmail.com\'">orchrch2024@gmail.com</span></span></div>';
+      reserveBox='<div class="event-reservation-box"><span style="display:block;margin-bottom:0.4rem">'+body+'</span><span style="display:block">Tel：<span style="color:#9e4028;cursor:pointer" onclick="window.location.href=\'tel:080-4329-6712\'">080-4329-6712</span></span><span style="display:block">Mail：<span style="color:#9e4028;cursor:pointer" onclick="window.location.href=\'mailto:orchurch2024@gmail.com\'">orchurch2024@gmail.com</span></span></div>';
     }
     html+='<div class="event-img-item"><img src="'+e.img+'" alt="'+altTxt+'" onclick="openLightbox(this.src)"/>'+reserveBox+'</div>';
   });
@@ -932,7 +932,7 @@ document.addEventListener('click',function(e){
 });
 /* ========== 連絡先 ========== */
 (function(){
-  var u='orchrch2024',d='gmail.com',mail=u+'@'+d;
+  var u='orchurch2024',d='gmail.com',mail=u+'@'+d;
   ['mail-disp','en-mail-disp','mail-btn','en-mail-footer'].forEach(function(id){var el=document.getElementById(id);if(el){el.textContent=mail;el.style.cursor='pointer';el.addEventListener('click',function(){window.location.href='mailto:'+mail;})}});
   ['tel-disp','en-tel-disp','tel-btn','tel-btn-en'].forEach(function(id){var el=document.getElementById(id);if(el){el.style.cursor='pointer';el.addEventListener('click',function(){window.location.href='tel:080-4329-6712';});}});
 })();
