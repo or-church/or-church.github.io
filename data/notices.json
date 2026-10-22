@@ -1,5 +1,11 @@
 [
   {
+    "id": "notice_1792481907434",
+    "ja": "2026 年10月25日（日）は、岡山ニューライフ教会を訪問いたします。\nそのため、当教会での礼拝および各集会はお休みとなります。ご理解のほどよろしくお願いいたします。",
+    "en": "On Sunday, October 25, 2026, I will be visiting Okayama New Life Church. Therefore, worship services and all meetings at our church will be suspended. We appreciate your understanding.",
+    "img": ""
+  },
+  {
     "id": "notice_1786063336569",
     "ja": "先日行われた「Worship 3B♰Cafe 2000 PreParty」がオルチャーチで行われ、CGNTVで取り上げていただきました。\nhttps://youtu.be/bgfNrzJ7WdE?si=mVoKmXHzoM0V4zae",
     "en": "The \"Worship 3B♰Cafe 2000 PreParty\" held the other day was featured on CGNTV at All Church.\nhttps://youtu.be/bgfNrzJ7WdE?si=mVoKmXHzoM0V4zae",
@@ -30,9 +36,9 @@
     "img": "https://or-church.github.io/images/notices/notice_1780622938292.png?t=1780622938292"
   },
   {
-    "id": "notice_1792481907434",
-    "ja": "2026 年10月25日（日）は、岡山ニューライフ教会を訪問いたします。\nそのため、当教会での礼拝および各集会はお休みとなります。ご理解のほどよろしくお願いいたします。",
-    "en": "On Sunday, October 25, 2026, I will be visiting Okayama New Life Church. Therefore, worship services and all meetings at our church will be suspended. We appreciate your understanding.",
+    "id": "notice_1792641930536",
+    "ja": "PHP の脆弱性による STORES への影響について\n2026年10月21日（水）に、プログラミング言語「PHP」の脆弱性が公表されました。\nOR Church and Coffeeのホームページ及び、通販サイト（STORES） のシステムでは PHP を使用していないため、今回の脆弱性による直接的な影響はございません。",
+    "en": "Regarding the Impact of PHP Vulnerability on STORES\n\nA vulnerability in the programming language \"PHP\" was disclosed on Wednesday, October 21, 2026.\n\nSince neither the homepage of OR Church and Coffee nor the online shopping site (STORES) uses PHP in their systems, there is no direct impact from this vulnerability.",
     "img": ""
   }
 ]
