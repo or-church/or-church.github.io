@@ -8,5 +8,15 @@
     "etime": "20:30",
     "reserve": "free",
     "img": "https://or-church.github.io/images/events/event_202611111900_1794182499999.webp?t=1794182499999"
+  },
+  {
+    "id": "202611231300",
+    "name": "Thanks Giving BBQ",
+    "start": "2026-11-23",
+    "end": "2026-11-23",
+    "stime": "13:00",
+    "etime": "16:00",
+    "reserve": "free",
+    "img": "https://or-church.github.io/images/events/event_202611231300_1794182791472.webp?t=1794182791472"
   }
 ]
