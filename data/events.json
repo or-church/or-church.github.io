@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "id": "202612051300",
+    "name": "クリスマスマーケット開催",
+    "start": "2026-12-05",
+    "end": "2026-12-05",
+    "stime": "13:00",
+    "etime": "16:00",
+    "reserve": "free",
+    "img": "https://or-church.github.io/images/events/event_202612051300_1795496262679.webp?t=1795496262679"
+  }
+]
